@@ -1,7 +1,7 @@
-import fr.cedriccreusot.pokedex.domain.common.model.EmptyError
-import fr.cedriccreusot.pokedex.domain.list.model.Pokemon
-import fr.cedriccreusot.pokedex.domain.common.model.Result
-import fr.cedriccreusot.pokedex.domain.common.model.Success
+import fr.cedriccreusot.domain.common.model.EmptyError
+import fr.cedriccreusot.domain.list.model.Pokemon
+import fr.cedriccreusot.domain.common.model.Result
+import fr.cedriccreusot.domain.common.model.Success
 import me.sargunvohra.lib.pokekotlin.client.PokeApi
 
 class PokemonRepositoryAdapter(private val pokemonDataSource: PokeApi) : PokemonRepository {
@@ -10,11 +10,16 @@ class PokemonRepositoryAdapter(private val pokemonDataSource: PokeApi) : Pokemon
         runCatching {
             pokemonDataSource.getPokemonList(0, 151)
         }.onSuccess {
-            result = Success(it.results.map { pokemon ->
-                Pokemon(pokemon.id, pokemon.name)
-            })
+            result =
+                Success(it.results.map { pokemon ->
+                    Pokemon(
+                        pokemon.id,
+                        pokemon.name
+                    )
+                })
         }.onFailure {
-            result = EmptyError<List<Pokemon>>()
+            result =
+                EmptyError()
         }
         return result
     }

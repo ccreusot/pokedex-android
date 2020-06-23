@@ -2,9 +2,9 @@ package fr.cedriccreusot.pokedex.dataadapter
 
 import PokemonRepositoryAdapter
 import com.google.common.truth.Truth.assertThat
-import fr.cedriccreusot.pokedex.domain.common.model.EmptyError
-import fr.cedriccreusot.pokedex.domain.common.model.Success
-import fr.cedriccreusot.pokedex.domain.list.model.Pokemon
+import fr.cedriccreusot.domain.common.model.EmptyError
+import fr.cedriccreusot.domain.common.model.Success
+import fr.cedriccreusot.domain.list.model.Pokemon
 import io.mockk.confirmVerified
 import io.mockk.every
 import io.mockk.mockk
