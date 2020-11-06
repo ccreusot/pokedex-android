@@ -24,6 +24,7 @@
             android:id="@+id/pokedexRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+            app:spanCount="2"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager" />
     </ViewFlipper>
 </androidx.constraintlayout.widget.ConstraintLayout>
