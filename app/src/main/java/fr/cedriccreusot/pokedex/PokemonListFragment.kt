@@ -2,6 +2,7 @@ package fr.cedriccreusot.pokedex
 
 import PokemonRepositoryAdapter
 import android.os.Bundle
+import android.util.TypedValue
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -13,6 +14,7 @@ import fr.cedriccreusot.domain.list.usecase.FetchPokemonListUseCase
 import fr.cedriccreusot.pokedex.presentation.list.PokemonListViewModel
 import fr.cedriccreusot.pokedex.presentation.list.PokemonListViewModelFactory
 import fr.cedriccreusot.pokedex.presentation.list.State
+import fr.cedriccreusot.pokedex.utils.GridSpacingItemDecoration
 import kotlinx.android.synthetic.main.fragment_pokemon_list.*
 import me.sargunvohra.lib.pokekotlin.client.PokeApiClient
 
@@ -43,6 +45,13 @@ class PokemonListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         pokedexRecyclerView.adapter = adapter
+        pokedexRecyclerView.addItemDecoration(
+            GridSpacingItemDecoration(
+                2,
+                TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 2f, resources.displayMetrics).toInt(),
+                true
+            )
+        )
         viewModel.pokemonList().observe(requireActivity()) {
             when (it) {
                 is State.Loading -> {
