@@ -43,7 +43,7 @@ class PokemonListViewModelTest {
         val useCase = mockk<FetchPokemonListUseCase>()
 
         val pokemonList = listOf(
-            Pokemon(0, "Zero")
+            Pokemon(0, "Zero", "imageUrl", "Fire", null)
         )
         every { useCase.invoke() }.returns(
             Success(

@@ -8,13 +8,17 @@ class PokemonRepositoryAdapter(private val pokemonDataSource: PokeApi) : Pokemon
     override fun getPokemons(): Result<List<Pokemon>> {
         lateinit var result: Result<List<Pokemon>>
         runCatching {
-            pokemonDataSource.getPokemonList(0, 151)
+            pokemonDataSource.getPokemonList(0, 11)
         }.onSuccess {
             result =
-                Success(it.results.map { pokemon ->
+                Success(it.results.map { resource ->
+                    val pokemon = pokemonDataSource.getPokemon(resource.id)
                     Pokemon(
                         pokemon.id,
-                        pokemon.name
+                        pokemon.name,
+                        pokemon.sprites.frontDefault?:"",
+                        pokemon.types[0].type.name,
+                        pokemon.types.getOrNull(1)?.type?.name,
                     )
                 })
         }.onFailure {

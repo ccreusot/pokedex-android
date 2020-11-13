@@ -90,17 +90,6 @@
             app:layout_constraintGuide_percent="0.5" />
 
         <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/pokemonImageView"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:adjustViewBounds="true"
-            app:layout_constraintStart_toEndOf="@id/guidline"
-            app:layout_constraintTop_toBottomOf="@id/pokemonIndexTextView"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            />
-
-        <androidx.appcompat.widget.AppCompatImageView
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:adjustViewBounds="true"
@@ -111,6 +100,17 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:tint="#4AFFFFFF"
             app:srcCompat="@drawable/pokeball"
+            />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/pokemonImageView"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:adjustViewBounds="true"
+            app:layout_constraintStart_toEndOf="@id/guidline"
+            app:layout_constraintTop_toBottomOf="@id/pokemonIndexTextView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
             />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

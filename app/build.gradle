@@ -58,6 +58,8 @@ dependencies {
     implementation "androidx.navigation:navigation-dynamic-features-fragment:$nav_version"
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 
+    implementation "io.coil-kt:coil:1.0.0"
+
     testImplementation 'junit:junit:4.13.1'
     testImplementation "com.google.truth:truth:1.0.1"
     testImplementation "io.mockk:mockk:1.10.0"
