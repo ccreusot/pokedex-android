@@ -1,0 +1,22 @@
+[
+    {
+        "merged": "D:\\Dev\\Pokedex\\benchmark\\build\\intermediates\\res\\merged\\release\\anim-v21\\design_bottom_sheet_slide_in.xml",
+        "source": "C:\\Users\\Cedric\\.gradle\\caches\\transforms-2\\files-2.1\\8880182b0bc356898f73c865efb0bc82\\material-1.2.1\\res\\anim-v21\\design_bottom_sheet_slide_in.xml"
+    },
+    {
+        "merged": "D:\\Dev\\Pokedex\\benchmark\\build\\intermediates\\res\\merged\\release\\anim-v21\\fragment_fast_out_extra_slow_in.xml",
+        "source": "C:\\Users\\Cedric\\.gradle\\caches\\transforms-2\\files-2.1\\8f191b74cf493e9f7d5c2c9a1b49a1d4\\fragment-1.2.4\\res\\anim-v21\\fragment_fast_out_extra_slow_in.xml"
+    },
+    {
+        "merged": "D:\\Dev\\Pokedex\\benchmark\\build\\intermediates\\res\\merged\\release\\anim-v21\\design_bottom_sheet_slide_out.xml",
+        "source": "C:\\Users\\Cedric\\.gradle\\caches\\transforms-2\\files-2.1\\8880182b0bc356898f73c865efb0bc82\\material-1.2.1\\res\\anim-v21\\design_bottom_sheet_slide_out.xml"
+    },
+    {
+        "merged": "D:\\Dev\\Pokedex\\benchmark\\build\\intermediates\\res\\merged\\release\\anim-v21\\mtrl_bottom_sheet_slide_out.xml",
+        "source": "C:\\Users\\Cedric\\.gradle\\caches\\transforms-2\\files-2.1\\8880182b0bc356898f73c865efb0bc82\\material-1.2.1\\res\\anim-v21\\mtrl_bottom_sheet_slide_out.xml"
+    },
+    {
+        "merged": "D:\\Dev\\Pokedex\\benchmark\\build\\intermediates\\res\\merged\\release\\anim-v21\\mtrl_bottom_sheet_slide_in.xml",
+        "source": "C:\\Users\\Cedric\\.gradle\\caches\\transforms-2\\files-2.1\\8880182b0bc356898f73c865efb0bc82\\material-1.2.1\\res\\anim-v21\\mtrl_bottom_sheet_slide_in.xml"
+    }
+]

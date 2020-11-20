@@ -1,0 +1,18 @@
+{
+  "version": 2,
+  "artifactType": {
+    "type": "PROCESSED_RES",
+    "kind": "Directory"
+  },
+  "applicationId": "fr.cedriccreusot.benchmark.test",
+  "variantName": "processReleaseAndroidTestResources",
+  "elements": [
+    {
+      "type": "SINGLE",
+      "filters": [],
+      "versionCode": 0,
+      "versionName": "",
+      "outputFile": "resources-releaseAndroidTest.ap_"
+    }
+  ]
+}

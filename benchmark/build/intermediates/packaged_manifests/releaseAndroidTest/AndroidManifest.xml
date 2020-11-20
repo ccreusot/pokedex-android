@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="fr.cedriccreusot.benchmark.test" >
+
+    <uses-sdk
+        android:minSdkVersion="21"
+        android:targetSdkVersion="30" />
+
+    <instrumentation
+        android:name="androidx.benchmark.junit4.AndroidBenchmarkRunner"
+        android:functionalTest="false"
+        android:handleProfiling="false"
+        android:label="Tests for fr.cedriccreusot.benchmark.test"
+        android:targetPackage="fr.cedriccreusot.benchmark.test" />
+
+    <uses-permission android:name="android.permission.REORDER_TASKS" />
+    <!--
+    This is needed to write benchmark report data to an external directory during instrumented
+    tests to allow the accompanying androidx.benchmark gradle plugin to pull the reports onto host
+     machine after the tests are done running.
+    -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" /> <!-- Permission will be merged into the manifest of the hosting app. -->
+    <!-- Is required to launch foreground extraction service for targetSdkVersion 28+. -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <!--
+      Important: disable debugging for accurate performance results
+
+      In a com.android.library project, this flag must be disabled from this
+      manifest, as it is not possible to override this flag from Gradle.
+    -->
+    <application
+        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+        android:debuggable="false" >
+        <uses-library android:name="android.test.runner" />
+
+        <activity
+            android:name="androidx.fragment.app.testing.FragmentScenario$EmptyFragmentActivity"
+            android:exported="true"
+            android:multiprocess="true"
+            android:taskAffinity=""
+            android:theme="@style/FragmentScenarioEmptyFragmentActivityTheme" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
+        </activity> <!-- Activity used to block background content while benchmarks are running -->
+        <activity
+            android:name="androidx.benchmark.IsolationActivity"
+            android:theme="@android:style/Theme.Light.NoTitleBar.Fullscreen" >
+        </activity>
+        <activity
+            android:name="androidx.test.core.app.InstrumentationActivityInvoker$BootstrapActivity"
+            android:theme="@android:style/Theme" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="androidx.test.core.app.InstrumentationActivityInvoker$EmptyActivity"
+            android:theme="@android:style/Theme" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="androidx.test.core.app.InstrumentationActivityInvoker$EmptyFloatingActivity"
+            android:theme="@android:style/Theme.Dialog" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
+        </activity>
+
+        <provider
+            android:name="androidx.lifecycle.ProcessLifecycleOwnerInitializer"
+            android:authorities="fr.cedriccreusot.benchmark.test.lifecycle-process"
+            android:exported="false"
+            android:multiprocess="true" /> <!-- The activities will be merged into the manifest of the hosting app. -->
+        <activity
+            android:name="com.google.android.play.core.missingsplits.PlayCoreMissingSplitsActivity"
+            android:enabled="false"
+            android:exported="false"
+            android:launchMode="singleInstance"
+            android:process=":playcore_missing_splits_activity"
+            android:stateNotNeeded="true" />
+        <activity
+            android:name="com.google.android.play.core.common.PlayCoreDialogWrapperActivity"
+            android:enabled="false"
+            android:exported="false"
+            android:stateNotNeeded="true"
+            android:theme="@style/Theme.PlayCore.Transparent" /> <!-- The service will be merged into the manifest of the hosting app. -->
+        <service
+            android:name="com.google.android.play.core.assetpacks.AssetPackExtractionService"
+            android:enabled="false"
+            android:exported="true" />
+    </application>
+
+</manifest>

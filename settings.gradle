@@ -1,3 +1,5 @@
+include ':presentation'
+include ':benchmark'
 include ':domain'
 include ':app'
 rootProject.name = "Pokedex"

@@ -1,0 +1,2 @@
+fr/cedriccreusot/benchmark/BuildConfig.java
+ fr.cedriccreusot.benchmark.BuildConfig

@@ -1,0 +1,22 @@
+[
+    {
+        "merged": "D:\\Dev\\Pokedex\\benchmark\\build\\intermediates\\res\\merged\\release\\xml\\standalone_badge_gravity_top_start.xml",
+        "source": "C:\\Users\\Cedric\\.gradle\\caches\\transforms-2\\files-2.1\\8880182b0bc356898f73c865efb0bc82\\material-1.2.1\\res\\xml\\standalone_badge_gravity_top_start.xml"
+    },
+    {
+        "merged": "D:\\Dev\\Pokedex\\benchmark\\build\\intermediates\\res\\merged\\release\\xml\\standalone_badge_gravity_bottom_start.xml",
+        "source": "C:\\Users\\Cedric\\.gradle\\caches\\transforms-2\\files-2.1\\8880182b0bc356898f73c865efb0bc82\\material-1.2.1\\res\\xml\\standalone_badge_gravity_bottom_start.xml"
+    },
+    {
+        "merged": "D:\\Dev\\Pokedex\\benchmark\\build\\intermediates\\res\\merged\\release\\xml\\standalone_badge_gravity_bottom_end.xml",
+        "source": "C:\\Users\\Cedric\\.gradle\\caches\\transforms-2\\files-2.1\\8880182b0bc356898f73c865efb0bc82\\material-1.2.1\\res\\xml\\standalone_badge_gravity_bottom_end.xml"
+    },
+    {
+        "merged": "D:\\Dev\\Pokedex\\benchmark\\build\\intermediates\\res\\merged\\release\\xml\\standalone_badge.xml",
+        "source": "C:\\Users\\Cedric\\.gradle\\caches\\transforms-2\\files-2.1\\8880182b0bc356898f73c865efb0bc82\\material-1.2.1\\res\\xml\\standalone_badge.xml"
+    },
+    {
+        "merged": "D:\\Dev\\Pokedex\\benchmark\\build\\intermediates\\res\\merged\\release\\xml\\standalone_badge_offset.xml",
+        "source": "C:\\Users\\Cedric\\.gradle\\caches\\transforms-2\\files-2.1\\8880182b0bc356898f73c865efb0bc82\\material-1.2.1\\res\\xml\\standalone_badge_offset.xml"
+    }
+]

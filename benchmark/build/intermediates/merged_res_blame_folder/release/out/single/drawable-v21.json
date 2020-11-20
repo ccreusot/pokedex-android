@@ -1,0 +1,30 @@
+[
+    {
+        "merged": "D:\\Dev\\Pokedex\\benchmark\\build\\intermediates\\res\\merged\\release\\drawable-v21\\abc_action_bar_item_background_material.xml",
+        "source": "C:\\Users\\Cedric\\.gradle\\caches\\transforms-2\\files-2.1\\91d06b13ed45a1ed4d791b70ec3fafc4\\appcompat-1.2.0\\res\\drawable-v21\\abc_action_bar_item_background_material.xml"
+    },
+    {
+        "merged": "D:\\Dev\\Pokedex\\benchmark\\build\\intermediates\\res\\merged\\release\\drawable-v21\\abc_list_divider_material.xml",
+        "source": "C:\\Users\\Cedric\\.gradle\\caches\\transforms-2\\files-2.1\\91d06b13ed45a1ed4d791b70ec3fafc4\\appcompat-1.2.0\\res\\drawable-v21\\abc_list_divider_material.xml"
+    },
+    {
+        "merged": "D:\\Dev\\Pokedex\\benchmark\\build\\intermediates\\res\\merged\\release\\drawable-v21\\design_bottom_navigation_item_background.xml",
+        "source": "C:\\Users\\Cedric\\.gradle\\caches\\transforms-2\\files-2.1\\8880182b0bc356898f73c865efb0bc82\\material-1.2.1\\res\\drawable-v21\\design_bottom_navigation_item_background.xml"
+    },
+    {
+        "merged": "D:\\Dev\\Pokedex\\benchmark\\build\\intermediates\\res\\merged\\release\\drawable-v21\\abc_dialog_material_background.xml",
+        "source": "C:\\Users\\Cedric\\.gradle\\caches\\transforms-2\\files-2.1\\91d06b13ed45a1ed4d791b70ec3fafc4\\appcompat-1.2.0\\res\\drawable-v21\\abc_dialog_material_background.xml"
+    },
+    {
+        "merged": "D:\\Dev\\Pokedex\\benchmark\\build\\intermediates\\res\\merged\\release\\drawable-v21\\abc_btn_colored_material.xml",
+        "source": "C:\\Users\\Cedric\\.gradle\\caches\\transforms-2\\files-2.1\\91d06b13ed45a1ed4d791b70ec3fafc4\\appcompat-1.2.0\\res\\drawable-v21\\abc_btn_colored_material.xml"
+    },
+    {
+        "merged": "D:\\Dev\\Pokedex\\benchmark\\build\\intermediates\\res\\merged\\release\\drawable-v21\\notification_action_background.xml",
+        "source": "C:\\Users\\Cedric\\.gradle\\caches\\transforms-2\\files-2.1\\5c766a520359f0389124604f27a3168f\\core-1.3.2\\res\\drawable-v21\\notification_action_background.xml"
+    },
+    {
+        "merged": "D:\\Dev\\Pokedex\\benchmark\\build\\intermediates\\res\\merged\\release\\drawable-v21\\abc_edit_text_material.xml",
+        "source": "C:\\Users\\Cedric\\.gradle\\caches\\transforms-2\\files-2.1\\91d06b13ed45a1ed4d791b70ec3fafc4\\appcompat-1.2.0\\res\\drawable-v21\\abc_edit_text_material.xml"
+    }
+]
