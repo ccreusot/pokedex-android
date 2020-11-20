@@ -3,4 +3,19 @@
     <color name="colorPrimary">#6200EE</color>
     <color name="colorPrimaryDark">#3700B3</color>
     <color name="colorAccent">#03DAC5</color>
+
+    <color name="pokeBlack">#FF303943</color>
+    <color name="pokeBlue">#FF429BED</color>
+    <color name="pokeBrown">#FFB1736C</color>
+    <color name="pokeLightBlue">#FF58ABF6</color>
+    <color name="pokeLightBrown">#FFCA8179</color>
+    <color name="pokeLightPurple">#FF9F5BBA</color>
+    <color name="pokeLightRed">#FFF7786B</color>
+    <color name="pokeLightTeal">#FF2CDAB1</color>
+    <color name="pokeLightYellow">#FFFFCE4B</color>
+    <color name="pokePurple">#FF7C538C</color>
+    <color name="pokeRed">#FFFA6555</color>
+    <color name="pokeTeal">#FF4FC1A6</color>
+    <color name="pokeYellow">#FFF6C747</color>
+
 </resources>

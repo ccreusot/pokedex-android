@@ -1,6 +1,8 @@
 package fr.cedriccreusot.pokedex
 
+import android.content.res.ColorStateList
 import android.view.View
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import fr.cedriccreusot.domain.list.model.Pokemon
@@ -17,5 +19,8 @@ class PokemonViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         }
         pokemonIndexTextView.text = "#%03d".format(pokemon.id)
         pokemonImageView.load(pokemon.imageUrl)
+
+        this.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(context, pokemon.getTypeResColor()))
+
     }
 }
