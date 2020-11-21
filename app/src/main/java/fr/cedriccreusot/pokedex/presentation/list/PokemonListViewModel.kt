@@ -1,6 +1,10 @@
 package fr.cedriccreusot.pokedex.presentation.list
 
-import androidx.lifecycle.*
+import androidx.hilt.lifecycle.ViewModelInject
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import fr.cedriccreusot.domain.common.model.Error
 import fr.cedriccreusot.domain.common.model.Success
 import fr.cedriccreusot.domain.list.model.Pokemon
@@ -14,15 +18,7 @@ sealed class State {
     data class Error(val message: String) : State()
 }
 
-class PokemonListViewModelFactory(val useCase: FetchPokemonListUseCase) :
-    ViewModelProvider.Factory {
-    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        return modelClass.getConstructor(FetchPokemonListUseCase::class.java)
-            .newInstance(useCase)
-    }
-}
-
-class PokemonListViewModel(private val useCase: FetchPokemonListUseCase) :
+class PokemonListViewModel @ViewModelInject constructor(private val useCase: FetchPokemonListUseCase) :
     ViewModel() {
 
     private val pokemonList: MutableLiveData<State> = MutableLiveData<State>(State.Loading)
@@ -31,7 +27,7 @@ class PokemonListViewModel(private val useCase: FetchPokemonListUseCase) :
 
     fun fetchPokemons() {
         viewModelScope.launch(Dispatchers.IO) {
-            val result = useCase()
+            val result = useCase(0, 20)
             pokemonList.postValue(State.Loading)
             when (result) {
                 is Success -> {

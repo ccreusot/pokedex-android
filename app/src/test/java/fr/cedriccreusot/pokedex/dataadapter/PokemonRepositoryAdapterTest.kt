@@ -1,6 +1,5 @@
 package fr.cedriccreusot.pokedex.dataadapter
 
-import PokemonRepositoryAdapter
 import com.google.common.truth.Truth.assertThat
 import fr.cedriccreusot.domain.common.model.EmptyError
 import fr.cedriccreusot.domain.common.model.Success
@@ -59,9 +58,9 @@ class PokemonRepositoryAdapterTest {
         )
         val repository = PokemonRepositoryAdapter(pokeapi)
 
-        val result = repository.getPokemons()
+        val result = repository.getPokemons(OFFSET, LIMIT)
 
-        verify { pokeapi.getPokemonList(any(), any()) }
+        verify { pokeapi.getPokemonList(OFFSET, LIMIT) }
         verify { pokeapi.getPokemon(any()) }
         confirmVerified(pokeapi)
         assertThat(result is Success<List<Pokemon>>).isTrue()
@@ -71,14 +70,19 @@ class PokemonRepositoryAdapterTest {
     fun `when repository call the pokemon api for the pokemon list which will throw an exception then it should return an Error`() {
         val pokeapi = mockk<PokeApi>()
 
-        every { pokeapi.getPokemonList(0, 151) }.throws(ErrorResponse(404, "Error not found"))
+        every { pokeapi.getPokemonList(any(), any()) }.throws(ErrorResponse(404, "Error not found"))
 
         val repository = PokemonRepositoryAdapter(pokeapi)
 
-        val result = repository.getPokemons()
+        val result = repository.getPokemons(OFFSET, LIMIT)
 
-        verify { pokeapi.getPokemonList(0, 151) }
+        verify { pokeapi.getPokemonList(OFFSET, LIMIT) }
         confirmVerified(pokeapi)
         assertThat(result is EmptyError<List<Pokemon>>).isTrue()
+    }
+
+    companion object {
+        const val OFFSET: Int = 0
+        const val LIMIT: Int = 151
     }
 }
