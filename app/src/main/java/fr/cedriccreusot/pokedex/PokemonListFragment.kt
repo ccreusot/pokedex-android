@@ -1,40 +1,25 @@
 package fr.cedriccreusot.pokedex
 
-import PokemonRepositoryAdapter
 import android.os.Bundle
 import android.util.TypedValue
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import com.google.android.material.snackbar.Snackbar
-import fr.cedriccreusot.domain.list.usecase.FetchPokemonListUseCase
+import dagger.hilt.android.AndroidEntryPoint
 import fr.cedriccreusot.pokedex.presentation.list.PokemonListViewModel
-import fr.cedriccreusot.pokedex.presentation.list.PokemonListViewModelFactory
 import fr.cedriccreusot.pokedex.presentation.list.State
 import fr.cedriccreusot.pokedex.utils.GridSpacingItemDecoration
 import kotlinx.android.synthetic.main.fragment_pokemon_list.*
-import me.sargunvohra.lib.pokekotlin.client.PokeApiClient
 
+@AndroidEntryPoint
 class PokemonListFragment : Fragment() {
 
-    private val viewModel: PokemonListViewModel by lazy {
-        ViewModelProvider(
-            this,
-            PokemonListViewModelFactory(
-                FetchPokemonListUseCase.create(
-                    PokemonRepositoryAdapter(PokeApiClient())
-                )
-            )
-        ).get(
-            PokemonListViewModel::class.java
-        )
-    }
+    private val viewModel: PokemonListViewModel by viewModels()
 
-    val adapter =
-        PokemonListAdapter()
+    private val pokemonAdapter = PokemonListAdapter()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -44,11 +29,15 @@ class PokemonListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        pokedexRecyclerView.adapter = adapter
+        pokedexRecyclerView.adapter = pokemonAdapter
         pokedexRecyclerView.addItemDecoration(
             GridSpacingItemDecoration(
                 2,
-                TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 2f, resources.displayMetrics).toInt(),
+                TypedValue.applyDimension(
+                    TypedValue.COMPLEX_UNIT_DIP,
+                    2f,
+                    resources.displayMetrics
+                ).toInt(),
                 true
             )
         )
@@ -59,7 +48,7 @@ class PokemonListFragment : Fragment() {
                 }
                 is State.Success -> {
                     pokedexContainerViewFlipper.displayedChild = 1
-                    adapter.submitList(it.value)
+                    pokemonAdapter.submitList(it.value)
                 }
                 is State.Error -> {
                     Snackbar.make(pokedexContainerViewFlipper, it.message, Snackbar.LENGTH_LONG)
