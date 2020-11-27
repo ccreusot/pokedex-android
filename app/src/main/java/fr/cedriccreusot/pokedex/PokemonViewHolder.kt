@@ -6,10 +6,11 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import fr.cedriccreusot.domain.list.model.Pokemon
-import kotlinx.android.synthetic.main.item_pokemon.view.*
+import fr.cedriccreusot.pokedex.databinding.ItemPokemonBinding
 
-class PokemonViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-    fun bind(pokemon: Pokemon) = with(itemView) {
+class PokemonViewHolder(private val binding: ItemPokemonBinding) : RecyclerView.ViewHolder(binding.root) {
+
+    fun bind(pokemon: Pokemon) = with(binding) {
         pokemonNameTextView.text = pokemon.name.capitalize()
         pokemonType1TextView.text = pokemon.mainType.capitalize()
         pokemonType2TextView.visibility = View.INVISIBLE
@@ -19,8 +20,6 @@ class PokemonViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         }
         pokemonIndexTextView.text = "#%03d".format(pokemon.id)
         pokemonImageView.load(pokemon.imageUrl)
-
-        this.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(context, pokemon.getTypeResColor()))
-
+        root.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(root.context, pokemon.getTypeResColor()))
     }
 }
