@@ -1,6 +1,8 @@
 package fr.cedriccreusot.pokedex.dataadapter
 
+import androidx.paging.PagingSource
 import fr.cedriccreusot.domain.common.model.EmptyError
+import fr.cedriccreusot.domain.common.model.Error
 import fr.cedriccreusot.domain.common.model.Result
 import fr.cedriccreusot.domain.common.model.Success
 import fr.cedriccreusot.domain.list.model.Pokemon
@@ -34,3 +36,16 @@ class PokemonRepositoryAdapter @Inject constructor(
         return result
     }
 }
+
+class PokemonsPagingSource(private val repository: PokemonRepository) : PagingSource<Int, Pokemon>() {
+    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Pokemon> {
+        val askedPage = params.key ?: 0
+        val result = repository.getPokemons(askedPage * OFFSET, OFFSET)
+        return when (result) {
+            is Success -> LoadResult.Page(data=result.value, prevKey = null, nextKey = askedPage + 1)
+            is Error -> LoadResult.Error(Exception(result.message))
+        }
+    }
+}
+
+private const val OFFSET = 20
