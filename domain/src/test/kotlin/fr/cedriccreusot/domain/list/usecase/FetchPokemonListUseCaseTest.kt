@@ -2,6 +2,8 @@ package fr.cedriccreusot.domain.list.usecase
 
 import com.google.common.truth.Truth.assertThat
 import fr.cedriccreusot.domain.common.model.EmptyError
+import fr.cedriccreusot.domain.common.model.PageEndOfPages
+import fr.cedriccreusot.domain.common.model.PageInvalidIndex
 import fr.cedriccreusot.domain.common.model.Success
 import fr.cedriccreusot.domain.list.model.Pokemon
 import fr.cedriccreusot.domain.list.repository.PokemonRepository
@@ -17,8 +19,8 @@ class FetchPokemonListUseCaseImplTest {
     private val useCase: FetchPokemonListUseCase = FetchPokemonListUseCaseImpl(repository)
 
     @Test
-    fun `when we fetch pokemon list we should have a list filled with pokemon`() {
-        every { repository.getPokemons(any(), any()) }.returns(
+    fun `when we fetch a pokedex page we should have a list filled with pokemon`() {
+        every { repository.getPokemons(page = any()) }.returns(
             Success(
                 listOf(
                     Pokemon(0, "Mew", "", "Psy", null),
@@ -28,22 +30,45 @@ class FetchPokemonListUseCaseImplTest {
             )
         )
 
-        val result = useCase(0, Int.MAX_VALUE)
+        val result = useCase(page = 0)
 
-        verify { repository.getPokemons(any(), any()) }
+        verify { repository.getPokemons(page = any()) }
         confirmVerified(repository)
 
         assertThat((result as Success<List<Pokemon>>).value).isNotEmpty()
     }
 
     @Test
-    fun `when we fetch pokemon list and the repository failed we should return an Error with error message`() {
-        every { repository.getPokemons(any(), any()) }.returns(EmptyError())
+    fun `when we fetch a pokedex page and the repository failed we should return an Error with error message`() {
+        every { repository.getPokemons(page = any()) }.returns(EmptyError())
 
-        val result = useCase(0, Int.MAX_VALUE)
+        val result = useCase(page = 0)
 
-        verify { repository.getPokemons(any(), any()) }
+        verify { repository.getPokemons(page = any()) }
         assertThat(result).isInstanceOf(EmptyError::class.java)
         confirmVerified(repository)
     }
+
+    @Test
+    fun `when we fetch a pokedex page with an invalid index we should get a PageInvalidIndex`() {
+        every { repository.getPokemons(page = -1) }.returns(PageInvalidIndex(-1))
+
+        val result = useCase(page = -1)
+
+        verify { repository.getPokemons(page = -1) }
+        assertThat(result).isInstanceOf(PageInvalidIndex::class.java)
+        confirmVerified(repository)
+    }
+
+    @Test
+    fun `when we fetch a pokedex page and the last one was already done we should get a PageEndOfPages`() {
+        every { repository.getPokemons(page = any()) }.returns(PageEndOfPages())
+
+        val result = useCase(page = Int.MAX_VALUE)
+
+        verify { repository.getPokemons(page = any()) }
+        assertThat(result).isInstanceOf(PageEndOfPages::class.java)
+        confirmVerified(repository)
+    }
+
 }

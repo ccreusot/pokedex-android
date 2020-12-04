@@ -11,10 +11,10 @@ import javax.inject.Inject
 class PokemonRepositoryAdapter @Inject constructor(
     private val pokemonDataSource: PokeApi
 ) : PokemonRepository {
-    override fun getPokemons(offset: Int, limit: Int): Result<List<Pokemon>> {
+    override fun getPokemons(page: Int): Result<List<Pokemon>> {
         lateinit var result: Result<List<Pokemon>>
         runCatching {
-            pokemonDataSource.getPokemonList(offset, limit)
+            pokemonDataSource.getPokemonList(0, 20)
         }.onSuccess {
             result =
                 Success(it.results.map { resource ->

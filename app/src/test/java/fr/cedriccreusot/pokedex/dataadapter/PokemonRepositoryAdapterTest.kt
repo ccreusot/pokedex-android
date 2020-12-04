@@ -20,7 +20,7 @@ typealias MockedPokemon = me.sargunvohra.lib.pokekotlin.model.Pokemon
 
 class PokemonRepositoryAdapterTest {
     @Test
-    fun `when repository call the pokemon api for the pokemon list then it should return a Success with the list of pokemon`() {
+    fun `when repository call the pokemon api for the first pokedex page then it should return a Success with the list of pokemon`() {
         val pokeapi = mockk<PokeApi>()
         every {
             pokeapi.getPokemon(any())
@@ -44,7 +44,7 @@ class PokemonRepositoryAdapterTest {
                 PokemonSprites(null, null, null, null, null, null, null, null)
             )
         )
-        every { pokeapi.getPokemonList(0, 151) }.returns(
+        every { pokeapi.getPokemonList(PAGE, LIMIT) }.returns(
             NamedApiResourceList(
                 count = 3,
                 next = null,
@@ -52,18 +52,24 @@ class PokemonRepositoryAdapterTest {
                 results = listOf(
                     NamedApiResource(name = "Cedric", category = "normal", id = 0),
                     NamedApiResource(name = "JC", category = "normal", id = 1),
-                    NamedApiResource(name = "Sylvain", category = "normal", id = 2)
+                    NamedApiResource(name = "Sylvain", category = "normal", id = 2),
+                    NamedApiResource(name = "Benjamin", category = "normal", id = 3),
                 )
             )
         )
         val repository = PokemonRepositoryAdapter(pokeapi)
 
-        val result = repository.getPokemons(OFFSET, LIMIT)
+        val result = repository.getPokemons(PAGE)
 
-        verify { pokeapi.getPokemonList(OFFSET, LIMIT) }
+        verify { pokeapi.getPokemonList(PAGE, LIMIT) }
         verify { pokeapi.getPokemon(any()) }
         confirmVerified(pokeapi)
         assertThat(result is Success<List<Pokemon>>).isTrue()
+    }
+
+    @Test
+    fun `when repository call the pokemon api for the 2nd pokedex page it should return a concatenated list of page 01 and page 02`() {
+        TODO("Not yet implemented")
     }
 
     @Test
@@ -74,15 +80,15 @@ class PokemonRepositoryAdapterTest {
 
         val repository = PokemonRepositoryAdapter(pokeapi)
 
-        val result = repository.getPokemons(OFFSET, LIMIT)
+        val result = repository.getPokemons(PAGE)
 
-        verify { pokeapi.getPokemonList(OFFSET, LIMIT) }
+        verify { pokeapi.getPokemonList(PAGE, LIMIT) }
         confirmVerified(pokeapi)
         assertThat(result is EmptyError<List<Pokemon>>).isTrue()
     }
 
     companion object {
-        const val OFFSET: Int = 0
-        const val LIMIT: Int = 151
+        const val PAGE: Int = 0
+        const val LIMIT: Int = 20
     }
 }

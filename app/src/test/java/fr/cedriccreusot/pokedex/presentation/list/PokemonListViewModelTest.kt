@@ -11,6 +11,8 @@ import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.ObsoleteCoroutinesApi
 import kotlinx.coroutines.newSingleThreadContext
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.setMain
@@ -19,6 +21,8 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 
+@ObsoleteCoroutinesApi
+@ExperimentalCoroutinesApi
 class PokemonListViewModelTest {
 
     private val mainThreadSurrogate = newSingleThreadContext("UI thread")
@@ -44,7 +48,7 @@ class PokemonListViewModelTest {
         val pokemonList = listOf(
             Pokemon(0, "Zero", "imageUrl", "Fire", null)
         )
-        every { useCase.invoke(any(), any()) }.returns(
+        every { useCase.invoke(any()) }.returns(
             Success(
                 pokemonList
             )
@@ -56,7 +60,7 @@ class PokemonListViewModelTest {
         viewModel.pokemonList().observeForever(observe)
         viewModel.fetchPokemons()
 
-        verify { useCase.invoke(any(), any()) }
+        verify { useCase.invoke(any()) }
         verify(atMost = 2) { observe.onChanged(State.Loading) }
         verify { observe.onChanged(State.Success(pokemonList)) }
         confirmVerified(useCase, observe)
@@ -66,7 +70,7 @@ class PokemonListViewModelTest {
     fun `when we observe the pokemonList and the usecase return an error it should return an error state`() {
         val useCase = mockk<FetchPokemonListUseCase>()
 
-        every { useCase.invoke(any(), any()) }.returns(
+        every { useCase.invoke(any()) }.returns(
             EmptyError()
         )
         val observe = mockk<Observer<State>>(relaxed = true)
@@ -76,7 +80,7 @@ class PokemonListViewModelTest {
         viewModel.pokemonList().observeForever(observe)
         viewModel.fetchPokemons()
 
-        verify { useCase.invoke(any(), any()) }
+        verify { useCase.invoke(any()) }
         verify(atMost = 2) { observe.onChanged(State.Loading) }
         verify { observe.onChanged(State.Error("Empty Pokemon list")) }
         confirmVerified(useCase, observe)

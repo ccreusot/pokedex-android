@@ -27,7 +27,7 @@ class PokemonListViewModel @ViewModelInject constructor(private val useCase: Fet
 
     fun fetchPokemons() {
         viewModelScope.launch(Dispatchers.IO) {
-            val result = useCase(0, 20)
+            val result = useCase(0)
             pokemonList.postValue(State.Loading)
             when (result) {
                 is Success -> {
