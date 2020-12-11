@@ -48,7 +48,7 @@ class PokemonListFragment : Fragment() {
                     true
                 )
             )
-            viewModel.pokemonList().observe(requireActivity()) {
+            viewModel.pokemonListState().observe(requireActivity()) {
                 when (it) {
                     is State.Loading -> {
                         pokedexContainerViewFlipper.displayedChild = 0
