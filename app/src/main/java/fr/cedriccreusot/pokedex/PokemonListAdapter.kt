@@ -7,13 +7,7 @@ import androidx.recyclerview.widget.ListAdapter
 import fr.cedriccreusot.domain.list.model.Pokemon
 import fr.cedriccreusot.pokedex.databinding.ItemPokemonBinding
 
-class PokemonListAdapter : ListAdapter<Pokemon, PokemonViewHolder>(object : DiffUtil.ItemCallback<Pokemon>() {
-    override fun areItemsTheSame(oldItem: Pokemon, newItem: Pokemon): Boolean =
-        oldItem === newItem
-
-    override fun areContentsTheSame(oldItem: Pokemon, newItem: Pokemon): Boolean =
-        oldItem == newItem
-}) {
+class PokemonListAdapter : ListAdapter<Pokemon, PokemonViewHolder>(PokemonDiffCallback) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PokemonViewHolder {
         return ItemPokemonBinding.inflate(LayoutInflater.from(parent.context)).let {
                 PokemonViewHolder(it)
@@ -23,4 +17,13 @@ class PokemonListAdapter : ListAdapter<Pokemon, PokemonViewHolder>(object : Diff
     override fun onBindViewHolder(holder: PokemonViewHolder, position: Int) {
         holder.bind(getItem(position))
     }
+}
+
+
+object PokemonDiffCallback : DiffUtil.ItemCallback<Pokemon>() {
+    override fun areItemsTheSame(oldItem: Pokemon, newItem: Pokemon): Boolean =
+        oldItem === newItem
+
+    override fun areContentsTheSame(oldItem: Pokemon, newItem: Pokemon): Boolean =
+        oldItem == newItem
 }

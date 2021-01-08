@@ -72,12 +72,18 @@ class PokemonListViewModelTest {
             val nextPage = listOf(
                 Pokemon(1, "TheONE", "imageUrl", "THEONE", null)
             )
+            val nextPage2 = listOf(
+                Pokemon(2, "TheSecond", "imageUrl", "THEONE", null)
+            )
             every {
                 useCase.invoke(0)
             }.returns(Success(firstPage))
             every {
                 useCase.invoke(1)
             }.returns(Success(nextPage))
+            every {
+                useCase.invoke(2)
+            }.returns(Success(nextPage2))
 
             val observe = mockk<Observer<State>>(relaxed = true)
 
@@ -86,6 +92,7 @@ class PokemonListViewModelTest {
             viewModel.pokemonListState().observeForever(observe)
             viewModel.fetchPokemons()
             delay(100)
+            viewModel.nextPage()
             viewModel.nextPage()
 
             verifySequence {
@@ -96,6 +103,9 @@ class PokemonListViewModelTest {
                 useCase.invoke(any())
                 observe.onChanged(State.LoadingNextPage)
                 observe.onChanged(State.Success(firstPage + nextPage))
+                useCase.invoke(any())
+                observe.onChanged(State.LoadingNextPage)
+                observe.onChanged(State.Success(firstPage + nextPage + nextPage2))
             }
             confirmVerified(useCase, observe)
         }

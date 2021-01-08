@@ -7,6 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import fr.cedriccreusot.pokedex.databinding.FragmentPokemonListBinding
@@ -48,6 +50,16 @@ class PokemonListFragment : Fragment() {
                     true
                 )
             )
+            pokedexRecyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                    super.onScrolled(recyclerView, dx, dy)
+                    (recyclerView.layoutManager as? GridLayoutManager)?.let {
+                        if (it.findLastVisibleItemPosition() - it.itemCount <= 1) {
+                            viewModel.nextPage()
+                        }
+                    }
+                }
+            })
             viewModel.pokemonListState().observe(requireActivity()) {
                 when (it) {
                     is State.Loading -> {
@@ -60,6 +72,9 @@ class PokemonListFragment : Fragment() {
                     is State.Error -> {
                         Snackbar.make(pokedexContainerViewFlipper, it.message, Snackbar.LENGTH_LONG)
                             .show()
+                    }
+                    is State.LoadingNextPage -> {
+                        TODO("Show a loading view below the list")
                     }
                 }
             }

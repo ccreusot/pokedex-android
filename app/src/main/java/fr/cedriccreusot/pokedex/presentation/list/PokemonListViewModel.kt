@@ -25,12 +25,13 @@ class PokemonListViewModel @ViewModelInject constructor(private val useCase: Fet
 
     private val pokemonListState: MutableLiveData<State> = MutableLiveData<State>(State.Loading)
     private var pokemonList: List<Pokemon> = emptyList()
+    private var pageIndex = 0
 
     fun pokemonListState(): LiveData<State> = pokemonListState
 
     fun fetchPokemons() {
         viewModelScope.launch(Dispatchers.IO) {
-            val result = useCase(0)
+            val result = useCase(pageIndex)
             pokemonListState.postValue(State.Loading)
             when (result) {
                 is Success -> {
@@ -41,12 +42,13 @@ class PokemonListViewModel @ViewModelInject constructor(private val useCase: Fet
                     pokemonListState.postValue(State.Error(result.message))
                 }
             }
+            pageIndex++
         }
     }
 
     fun nextPage() {
         viewModelScope.launch(Dispatchers.IO) {
-            val result = useCase(1)
+            val result = useCase(pageIndex)
             pokemonListState.postValue(State.LoadingNextPage)
             when (result) {
                 is Success -> {
@@ -57,6 +59,7 @@ class PokemonListViewModel @ViewModelInject constructor(private val useCase: Fet
                     pokemonListState.postValue(State.Success(pokemonList))
                 }
             }
+            pageIndex++
         }
     }
 }
