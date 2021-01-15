@@ -14,7 +14,7 @@ class PokemonRepositoryAdapter @Inject constructor(
     override fun getPokemons(page: Int): Result<List<Pokemon>> {
         lateinit var result: Result<List<Pokemon>>
         runCatching {
-            pokemonDataSource.getPokemonList(0, 20)
+            pokemonDataSource.getPokemonList(page * LIMIT, LIMIT)
         }.onSuccess {
             result =
                 Success(it.results.map { resource ->
@@ -32,5 +32,9 @@ class PokemonRepositoryAdapter @Inject constructor(
                 EmptyError()
         }
         return result
+    }
+
+    companion object {
+        private const val LIMIT = 20
     }
 }
