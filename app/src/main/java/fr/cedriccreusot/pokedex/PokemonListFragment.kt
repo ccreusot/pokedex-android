@@ -55,7 +55,9 @@ class PokemonListFragment : Fragment() {
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                     super.onScrolled(recyclerView, dx, dy)
                     (recyclerView.layoutManager as? GridLayoutManager)?.let {
-                        if (it.findLastVisibleItemPosition() - it.itemCount <= 1) {
+                        if (it.itemCount - it.findLastVisibleItemPosition() == 1
+                            && viewModel.pokemonListState().value != State.Loading
+                            && viewModel.pokemonListState().value != State.LoadingNextPage) {
                             viewModel.nextPage()
                         }
                     }
@@ -71,7 +73,7 @@ class PokemonListFragment : Fragment() {
                         pokemonAdapter.submitList(it.value)
                     }
                     is State.Error -> {
-                        Snackbar.make(pokedexContainerViewFlipper, it.message, Snackbar.LENGTH_LONG)
+                        Snackbar.make(pokedexConstraintLayout, it.message, Snackbar.LENGTH_LONG)
                             .show()
                     }
                     is State.LoadingNextPage -> {

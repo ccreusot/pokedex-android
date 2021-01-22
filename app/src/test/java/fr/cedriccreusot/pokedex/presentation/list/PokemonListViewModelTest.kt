@@ -100,11 +100,11 @@ class PokemonListViewModelTest {
                 useCase.invoke(any())
                 observe.onChanged(State.Loading)
                 observe.onChanged(State.Success(firstPage))
-                useCase.invoke(any())
                 observe.onChanged(State.LoadingNextPage)
+                useCase.invoke(any())
                 observe.onChanged(State.Success(firstPage + nextPage))
-                useCase.invoke(any())
                 observe.onChanged(State.LoadingNextPage)
+                useCase.invoke(any())
                 observe.onChanged(State.Success(firstPage + nextPage + nextPage2))
             }
             confirmVerified(useCase, observe)
@@ -136,9 +136,9 @@ class PokemonListViewModelTest {
             useCase.invoke(any())
             observe.onChanged(State.Loading)
             observe.onChanged(State.Success(firstPage))
-            useCase.invoke(any())
             observe.onChanged(State.LoadingNextPage)
-            observe.onChanged(State.Success(firstPage))
+            useCase.invoke(any())
+            observe.onChanged(State.Error("page end of pages"))
         }
         confirmVerified(useCase, observe)
     }

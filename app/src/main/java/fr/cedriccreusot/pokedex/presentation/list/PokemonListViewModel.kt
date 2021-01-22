@@ -11,6 +11,7 @@ import fr.cedriccreusot.domain.common.model.Success
 import fr.cedriccreusot.domain.list.model.Pokemon
 import fr.cedriccreusot.domain.list.usecase.FetchPokemonListUseCase
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
 sealed class State {
@@ -23,9 +24,11 @@ sealed class State {
 class PokemonListViewModel @ViewModelInject constructor(private val useCase: FetchPokemonListUseCase) :
     ViewModel() {
 
-    private val pokemonListState: MutableLiveData<State> = MutableLiveData<State>(State.Loading)
+    private val pokemonListState: MutableLiveData<State> = MutableLiveData(State.Loading)
     private var pokemonList: List<Pokemon> = emptyList()
     private var pageIndex = 0
+
+    private var job : Job? = null
 
     fun pokemonListState(): LiveData<State> = pokemonListState
 
@@ -47,16 +50,17 @@ class PokemonListViewModel @ViewModelInject constructor(private val useCase: Fet
     }
 
     fun nextPage() {
-        viewModelScope.launch(Dispatchers.IO) {
-            val result = useCase(pageIndex)
+        job?.cancel()
+
+        job = viewModelScope.launch(Dispatchers.IO) {
             pokemonListState.postValue(State.LoadingNextPage)
-            when (result) {
+            when (val result = useCase(pageIndex)) {
                 is Success -> {
                     pokemonList = pokemonList + result.value
                     pokemonListState.postValue(State.Success(pokemonList))
                 }
                 is PageEndOfPages -> {
-                    pokemonListState.postValue(State.Success(pokemonList))
+                    pokemonListState.postValue(State.Error("page end of pages"))
                 }
             }
             pageIndex++
