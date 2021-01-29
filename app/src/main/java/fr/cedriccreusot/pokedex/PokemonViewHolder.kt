@@ -6,6 +6,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import fr.cedriccreusot.domain.list.model.Pokemon
+import fr.cedriccreusot.pokedex.databinding.ItemLoaderBinding
 import fr.cedriccreusot.pokedex.databinding.ItemPokemonBinding
 
 class PokemonViewHolder(private val binding: ItemPokemonBinding) : RecyclerView.ViewHolder(binding.root) {
@@ -23,3 +24,5 @@ class PokemonViewHolder(private val binding: ItemPokemonBinding) : RecyclerView.
         root.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(root.context, pokemon.getTypeResColor()))
     }
 }
+
+class PokemonLoadMoreViewHolder(private val binding: ItemLoaderBinding) : RecyclerView.ViewHolder(binding.root)

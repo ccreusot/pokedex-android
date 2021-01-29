@@ -51,6 +51,14 @@ class PokemonListFragment : Fragment() {
                     true
                 )
             )
+            (pokedexRecyclerView.layoutManager as GridLayoutManager).spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
+                override fun getSpanSize(position: Int): Int {
+                    return when((pokedexRecyclerView.adapter as PokemonListAdapter).getItemViewType(position)) {
+                        PokemonListAdapter.POKEMON_LOAD_MORE_VIEW_TYPE -> 2
+                        else -> 1
+                    }
+                }
+            }
             pokedexRecyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                     super.onScrolled(recyclerView, dx, dy)
@@ -77,8 +85,7 @@ class PokemonListFragment : Fragment() {
                             .show()
                     }
                     is State.LoadingNextPage -> {
-                        Snackbar.make(pokedexContainerViewFlipper, "Loading next page...", Snackbar.LENGTH_LONG)
-                            .show()
+                        pokemonAdapter.showLoadMore()
                     }
                 }
             }
