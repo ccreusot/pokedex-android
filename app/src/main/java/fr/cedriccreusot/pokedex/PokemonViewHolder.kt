@@ -9,7 +9,10 @@ import fr.cedriccreusot.domain.list.model.Pokemon
 import fr.cedriccreusot.pokedex.databinding.ItemLoaderBinding
 import fr.cedriccreusot.pokedex.databinding.ItemPokemonBinding
 
-class PokemonViewHolder(private val binding: ItemPokemonBinding) : RecyclerView.ViewHolder(binding.root) {
+class PokemonViewHolder(
+    private val binding: ItemPokemonBinding,
+    private val onPokemonClicked: (id: Int) -> Unit
+) : RecyclerView.ViewHolder(binding.root) {
 
     fun bind(pokemon: Pokemon) = with(binding) {
         pokemonNameTextView.text = pokemon.name.capitalize()
@@ -21,7 +24,12 @@ class PokemonViewHolder(private val binding: ItemPokemonBinding) : RecyclerView.
         }
         pokemonIndexTextView.text = "#%03d".format(pokemon.id)
         pokemonImageView.load(pokemon.imageUrl)
-        root.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(root.context, pokemon.getTypeResColor()))
+        root.backgroundTintList =
+            ColorStateList.valueOf(ContextCompat.getColor(root.context, pokemon.getTypeResColor()))
+
+        root.setOnClickListener {
+            onPokemonClicked(pokemon.id)
+        }
     }
 }
 

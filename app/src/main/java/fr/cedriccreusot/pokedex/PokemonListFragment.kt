@@ -23,7 +23,7 @@ class PokemonListFragment : Fragment() {
 
     private val viewModel: PokemonListViewModel by viewModels()
 
-    private val pokemonAdapter = PokemonListAdapter()
+    private val pokemonAdapter = PokemonListAdapter(::onPokemonClicked)
 
     private lateinit var binding: WeakReference<FragmentPokemonListBinding>
 
@@ -91,5 +91,9 @@ class PokemonListFragment : Fragment() {
             }
         }
         viewModel.fetchPokemons()
+    }
+
+    private fun onPokemonClicked(pokemonId: Int) {
+
     }
 }

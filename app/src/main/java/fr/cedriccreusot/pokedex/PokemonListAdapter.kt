@@ -9,7 +9,9 @@ import fr.cedriccreusot.domain.list.model.Pokemon
 import fr.cedriccreusot.pokedex.databinding.ItemLoaderBinding
 import fr.cedriccreusot.pokedex.databinding.ItemPokemonBinding
 
-class PokemonListAdapter : ListAdapter<Pokemon, RecyclerView.ViewHolder>(PokemonDiffCallback) {
+class PokemonListAdapter(
+    private val onPokemonClicked: (pokemonId: Int) -> Unit
+) : ListAdapter<Pokemon, RecyclerView.ViewHolder>(PokemonDiffCallback) {
     private var isLoadingMore: Boolean = false
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -19,7 +21,8 @@ class PokemonListAdapter : ListAdapter<Pokemon, RecyclerView.ViewHolder>(Pokemon
                     LayoutInflater.from(
                         parent.context
                     )
-                )
+                ),
+                onPokemonClicked
             )
             else -> PokemonLoadMoreViewHolder(ItemLoaderBinding.inflate(LayoutInflater.from(parent.context)))
         }
