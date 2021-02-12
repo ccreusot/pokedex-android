@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.observe
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
@@ -26,6 +27,11 @@ class PokemonListFragment : Fragment() {
     private val pokemonAdapter = PokemonListAdapter(::onPokemonClicked)
 
     private lateinit var binding: WeakReference<FragmentPokemonListBinding>
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        viewModel.fetchPokemons()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -71,7 +77,7 @@ class PokemonListFragment : Fragment() {
                     }
                 }
             })
-            viewModel.pokemonListState().observe(requireActivity()) {
+            viewModel.pokemonListState().observe(owner = requireActivity()) {
                 when (it) {
                     is State.Loading -> {
                         pokedexContainerViewFlipper.displayedChild = 0
@@ -90,10 +96,10 @@ class PokemonListFragment : Fragment() {
                 }
             }
         }
-        viewModel.fetchPokemons()
     }
 
     private fun onPokemonClicked(pokemonId: Int) {
-
+        val action = PokemonListFragmentDirections.actionPokemonListFragmentToPokemonDetailFragment(pokemonId)
+        findNavController().navigate(action)
     }
 }

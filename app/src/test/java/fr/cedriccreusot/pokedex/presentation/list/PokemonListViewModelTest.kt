@@ -41,11 +41,11 @@ class PokemonListViewModelTest {
     }
 
     @Test
-    fun `when we observe the pokemonList it should start loading then return the list of pokemons`() {
+    fun `when we fetch the pokemonList then we should retrieve it`() {
         val pokemonList = listOf(
             Pokemon(0, "Zero", "imageUrl", "Fire", null)
         )
-        every { useCase.invoke(any()) }.returns(
+        every { useCase.invoke(0) }.returns(
             Success(
                 pokemonList
             )
@@ -57,10 +57,32 @@ class PokemonListViewModelTest {
         viewModel.pokemonListState().observeForever(observe)
         viewModel.fetchPokemons()
 
-        verify { useCase.invoke(any()) }
         verify(atMost = 2) { observe.onChanged(State.Loading) }
         verify { observe.onChanged(State.Success(pokemonList)) }
-        confirmVerified(useCase, observe)
+        confirmVerified(observe)
+    }
+
+    @Test
+    fun `when we fetch the pokemonList and its already loaded it should not return the same list`() {
+        val pokemonList = listOf(
+            Pokemon(0, "Zero", "imageUrl", "Fire", null)
+        )
+        every { useCase.invoke(0) }.returns(
+            Success(
+                pokemonList
+            )
+        )
+        val observe = mockk<Observer<State>>(relaxed = true)
+
+        val viewModel = PokemonListViewModel(useCase)
+
+        viewModel.pokemonListState().observeForever(observe)
+        viewModel.fetchPokemons()
+        viewModel.fetchPokemons()
+
+        verify(atMost = 3) { observe.onChanged(State.Loading) }
+        verify(atMost = 2) { observe.onChanged(State.Success(pokemonList)) }
+        confirmVerified(observe)
     }
 
     @Test
@@ -91,23 +113,18 @@ class PokemonListViewModelTest {
 
             viewModel.pokemonListState().observeForever(observe)
             viewModel.fetchPokemons()
-            delay(100)
+            // Cause LiveData observer
+            // We need to put a delay of 1 millis to help the Mocked observer fetch the Data...
+            delay(1)
             viewModel.nextPage()
             viewModel.nextPage()
 
-            verifySequence {
-                observe.onChanged(State.Loading)
-                useCase.invoke(any())
-                observe.onChanged(State.Loading)
-                observe.onChanged(State.Success(firstPage))
-                observe.onChanged(State.LoadingNextPage)
-                useCase.invoke(any())
-                observe.onChanged(State.Success(firstPage + nextPage))
-                observe.onChanged(State.LoadingNextPage)
-                useCase.invoke(any())
-                observe.onChanged(State.Success(firstPage + nextPage + nextPage2))
-            }
-            confirmVerified(useCase, observe)
+            verify(atMost = 2) { observe.onChanged(State.Loading) }
+            verify(atMost = 2) { observe.onChanged(State.LoadingNextPage) }
+            verify { observe.onChanged(State.Success(firstPage)) }
+            verify { observe.onChanged(State.Success(firstPage + nextPage)) }
+            verify { observe.onChanged(State.Success(firstPage + nextPage + nextPage2)) }
+            confirmVerified(observe)
         }
 
     @Test
@@ -128,19 +145,14 @@ class PokemonListViewModelTest {
 
         viewModel.pokemonListState().observeForever(observe)
         viewModel.fetchPokemons()
-        delay(100)
         viewModel.nextPage()
 
-        verifySequence {
-            observe.onChanged(State.Loading)
-            useCase.invoke(any())
-            observe.onChanged(State.Loading)
-            observe.onChanged(State.Success(firstPage))
-            observe.onChanged(State.LoadingNextPage)
-            useCase.invoke(any())
-            observe.onChanged(State.Error("page end of pages"))
-        }
-        confirmVerified(useCase, observe)
+        verify(atMost = 2) { observe.onChanged(State.Loading) }
+        verify(exactly = 1) { observe.onChanged(State.LoadingNextPage) }
+        verify { observe.onChanged(State.Success(firstPage)) }
+        verify { observe.onChanged(State.Error("page end of pages")) }
+
+        confirmVerified(observe)
     }
 
     @Test
@@ -155,9 +167,8 @@ class PokemonListViewModelTest {
         viewModel.pokemonListState().observeForever(observe)
         viewModel.fetchPokemons()
 
-        verify { useCase.invoke(any()) }
         verify(atMost = 2) { observe.onChanged(State.Loading) }
         verify { observe.onChanged(State.Error("Empty Pokemon list")) }
-        confirmVerified(useCase, observe)
+        confirmVerified(observe)
     }
 }
