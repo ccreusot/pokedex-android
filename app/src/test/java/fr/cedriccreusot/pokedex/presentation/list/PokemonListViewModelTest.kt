@@ -115,7 +115,7 @@ class PokemonListViewModelTest {
             viewModel.fetchPokemons()
             // Cause LiveData observer
             // We need to put a delay of 1 millis to help the Mocked observer fetch the Data...
-            delay(1)
+            delay(100)
             viewModel.nextPage()
             viewModel.nextPage()
 
