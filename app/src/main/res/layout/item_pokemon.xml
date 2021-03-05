@@ -5,14 +5,14 @@
     android:id="@+id/pokemonItemCardView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:cardElevation="2dp"
-    app:cardCornerRadius="16dp"
-    app:cardUseCompatPadding="true"
     android:backgroundTint="#AF00FF90"
     android:backgroundTintMode="src_atop"
-    app:strokeWidth="0dp"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="2dp"
+    app:cardPreventCornerOverlap="true"
+    app:cardUseCompatPadding="true"
     app:strokeColor="@null"
-    app:cardPreventCornerOverlap="true">
+    app:strokeWidth="0dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraint"
@@ -21,18 +21,17 @@
 
         <TextView
             android:id="@+id/pokemonIndexTextView"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="16dp"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:gravity="end"
             android:textAppearance="@style/TextAppearance.AppCompat.Caption"
             android:textStyle="bold"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:gravity="end"
-            tools:text="#001"
-            />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="#001" />
 
         <TextView
             android:id="@+id/pokemonNameTextView"
@@ -40,8 +39,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
-            android:textStyle="bold"
             android:textColor="@android:color/white"
+            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/pokemonIndexTextView"
@@ -51,37 +50,37 @@
             android:id="@+id/pokemonType1TextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
             android:layout_marginStart="16dp"
-            android:paddingVertical="2dp"
-            android:paddingHorizontal="12dp"
-            android:textAppearance="@style/TextAppearance.AppCompat.Caption"
-            android:textStyle="bold"
-            android:textColor="@android:color/white"
-            android:gravity="center"
-            app:layout_constraintTop_toBottomOf="@id/pokemonNameTextView"
-            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="8dp"
             android:background="@drawable/pokemon_type_background"
-            tools:text="Plante"/>
+            android:gravity="center"
+            android:paddingHorizontal="12dp"
+            android:paddingVertical="2dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+            android:textColor="@android:color/white"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/pokemonNameTextView"
+            tools:text="Plante" />
 
         <TextView
             android:id="@+id/pokemonType2TextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="@style/TextAppearance.AppCompat.Caption"
-            android:layout_marginTop="4dp"
             android:layout_marginStart="16dp"
+            android:layout_marginTop="4dp"
             android:layout_marginBottom="16dp"
-            android:paddingVertical="2dp"
-            android:paddingHorizontal="12dp"
-            android:textStyle="bold"
-            android:textColor="@android:color/white"
-            android:gravity="center"
             android:background="@drawable/pokemon_type_background"
-            app:layout_constraintTop_toBottomOf="@id/pokemonType1TextView"
-            app:layout_constraintStart_toStartOf="parent"
+            android:gravity="center"
+            android:paddingHorizontal="12dp"
+            android:paddingVertical="2dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+            android:textColor="@android:color/white"
+            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
-            tools:text="Poison"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/pokemonType1TextView"
+            tools:text="Poison" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guidline"
@@ -94,25 +93,23 @@
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:adjustViewBounds="true"
-            android:translationY="16dp"
             android:translationX="10dp"
+            android:translationY="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/pokemonIndexTextView"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:tint="#4AFFFFFF"
             app:srcCompat="@drawable/pokeball"
-            />
+            app:tint="#4AFFFFFF" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/pokemonImageView"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:adjustViewBounds="true"
-            app:layout_constraintStart_toEndOf="@id/guidline"
-            app:layout_constraintTop_toBottomOf="@id/pokemonIndexTextView"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/guidline"
+            app:layout_constraintTop_toBottomOf="@id/pokemonIndexTextView" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.card.MaterialCardView>
