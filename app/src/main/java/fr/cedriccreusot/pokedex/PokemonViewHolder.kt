@@ -3,6 +3,9 @@ package fr.cedriccreusot.pokedex
 import android.content.res.ColorStateList
 import android.view.View
 import androidx.core.content.ContextCompat
+import androidx.core.view.ViewCompat
+import androidx.navigation.fragment.FragmentNavigator
+import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import fr.cedriccreusot.domain.list.model.Pokemon
@@ -11,7 +14,7 @@ import fr.cedriccreusot.pokedex.databinding.ItemPokemonBinding
 
 class PokemonViewHolder(
     private val binding: ItemPokemonBinding,
-    private val onPokemonClicked: (id: Int) -> Unit
+    private val onPokemonClicked: (id: Int, extras: FragmentNavigator.Extras) -> Unit
 ) : RecyclerView.ViewHolder(binding.root) {
 
     fun bind(pokemon: Pokemon) = with(binding) {
@@ -27,8 +30,12 @@ class PokemonViewHolder(
         root.backgroundTintList =
             ColorStateList.valueOf(ContextCompat.getColor(root.context, pokemon.getTypeResColor()))
 
+        ViewCompat.setTransitionName(pokeballImageView, "pokeball_${pokemon.id}")
+        val extras = FragmentNavigatorExtras(
+            pokeballImageView to "pokeball_${pokemon.id}"
+        )
         root.setOnClickListener {
-            onPokemonClicked(pokemon.id)
+            onPokemonClicked(pokemon.id, extras)
         }
     }
 }

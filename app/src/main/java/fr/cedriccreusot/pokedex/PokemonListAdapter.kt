@@ -2,6 +2,7 @@ package fr.cedriccreusot.pokedex
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.navigation.fragment.FragmentNavigator
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -10,7 +11,7 @@ import fr.cedriccreusot.pokedex.databinding.ItemLoaderBinding
 import fr.cedriccreusot.pokedex.databinding.ItemPokemonBinding
 
 class PokemonListAdapter(
-    private val onPokemonClicked: (pokemonId: Int) -> Unit
+    private val onPokemonClicked: (pokemonId: Int, extras: FragmentNavigator.Extras) -> Unit
 ) : ListAdapter<Pokemon, RecyclerView.ViewHolder>(PokemonDiffCallback) {
     private var isLoadingMore: Boolean = false
 
