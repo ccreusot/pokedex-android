@@ -2,7 +2,7 @@ package fr.cedriccreusot.domain.list.usecase
 
 import fr.cedriccreusot.domain.common.model.Result
 import fr.cedriccreusot.domain.list.model.Pokemon
-import fr.cedriccreusot.domain.list.repository.PokemonRepository
+import fr.cedriccreusot.domain.common.repository.PokemonRepository
 
 interface FetchPokemonListUseCase {
     operator fun invoke(page: Int): Result<List<Pokemon>>

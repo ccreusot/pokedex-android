@@ -5,7 +5,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ActivityRetainedComponent
-import fr.cedriccreusot.domain.list.repository.PokemonRepository
+import fr.cedriccreusot.domain.common.repository.PokemonRepository
 import fr.cedriccreusot.domain.list.usecase.FetchPokemonListUseCase
 import fr.cedriccreusot.pokedex.dataadapter.PokemonRepositoryAdapter
 import me.sargunvohra.lib.pokekotlin.client.PokeApi

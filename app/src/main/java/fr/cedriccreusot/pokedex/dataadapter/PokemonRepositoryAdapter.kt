@@ -4,7 +4,8 @@ import fr.cedriccreusot.domain.common.model.EmptyError
 import fr.cedriccreusot.domain.common.model.Result
 import fr.cedriccreusot.domain.common.model.Success
 import fr.cedriccreusot.domain.list.model.Pokemon
-import fr.cedriccreusot.domain.list.repository.PokemonRepository
+import fr.cedriccreusot.domain.common.repository.PokemonRepository
+import fr.cedriccreusot.domain.detail.model.PokemonDetail
 import me.sargunvohra.lib.pokekotlin.client.PokeApi
 import javax.inject.Inject
 
@@ -32,6 +33,10 @@ class PokemonRepositoryAdapter @Inject constructor(
                 EmptyError()
         }
         return result
+    }
+
+    override fun getPokemon(id: Int): Result<PokemonDetail> {
+        TODO("Not yet implemented")
     }
 
     companion object {
