@@ -1,14 +1,12 @@
 package fr.cedriccreusot.pokedex
 
 import android.os.Bundle
-import android.transition.Transition
 import android.transition.TransitionInflater
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.ViewCompat
-import androidx.navigation.NavArgs
 import androidx.navigation.fragment.navArgs
 import fr.cedriccreusot.pokedex.databinding.FragmentPokemonDetailBinding
 import java.lang.ref.WeakReference
