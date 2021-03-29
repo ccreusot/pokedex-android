@@ -5,9 +5,9 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ActivityRetainedComponent
-import fr.cedriccreusot.domain.common.repository.PokemonRepository
+import fr.cedriccreusot.domain.common.repository.PokemonListRepository
 import fr.cedriccreusot.domain.list.usecase.FetchPokemonListUseCase
-import fr.cedriccreusot.pokedex.dataadapter.PokemonRepositoryAdapter
+import fr.cedriccreusot.pokedex.dataadapter.PokemonListRepositoryAdapter
 import me.sargunvohra.lib.pokekotlin.client.PokeApi
 import me.sargunvohra.lib.pokekotlin.client.PokeApiClient
 
@@ -18,7 +18,7 @@ class PokemonModule {
     fun providePokeApi(): PokeApi = PokeApiClient()
 
     @Provides
-    fun provideFetchPokemonListUseCase(repository: PokemonRepository): FetchPokemonListUseCase =
+    fun provideFetchPokemonListUseCase(repository: PokemonListRepository): FetchPokemonListUseCase =
         FetchPokemonListUseCase.create(repository)
 }
 
@@ -26,5 +26,5 @@ class PokemonModule {
 @InstallIn(ActivityRetainedComponent::class)
 abstract class PokemonRepositoryModule {
     @Binds
-    abstract fun bindPokemonRepository(pokemonRepositoryAdapter: PokemonRepositoryAdapter): PokemonRepository
+    abstract fun bindPokemonRepository(pokemonRepositoryAdapter: PokemonListRepositoryAdapter): PokemonListRepository
 }

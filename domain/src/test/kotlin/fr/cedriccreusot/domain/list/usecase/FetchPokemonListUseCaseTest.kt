@@ -5,8 +5,8 @@ import fr.cedriccreusot.domain.common.model.EmptyError
 import fr.cedriccreusot.domain.common.model.PageEndOfPages
 import fr.cedriccreusot.domain.common.model.PageInvalidIndex
 import fr.cedriccreusot.domain.common.model.Success
+import fr.cedriccreusot.domain.common.repository.PokemonListRepository
 import fr.cedriccreusot.domain.list.model.Pokemon
-import fr.cedriccreusot.domain.common.repository.PokemonRepository
 import io.mockk.confirmVerified
 import io.mockk.every
 import io.mockk.mockk
@@ -15,7 +15,7 @@ import org.junit.Test
 
 class FetchPokemonListUseCaseImplTest {
 
-    private val repository: PokemonRepository = mockk()
+    private val repository: PokemonListRepository = mockk()
     private val useCase: FetchPokemonListUseCase = FetchPokemonListUseCaseImpl(repository)
 
     @Test

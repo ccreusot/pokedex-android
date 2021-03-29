@@ -1,20 +1,20 @@
 package fr.cedriccreusot.domain.list.usecase
 
 import fr.cedriccreusot.domain.common.model.Result
+import fr.cedriccreusot.domain.common.repository.PokemonListRepository
 import fr.cedriccreusot.domain.list.model.Pokemon
-import fr.cedriccreusot.domain.common.repository.PokemonRepository
 
 interface FetchPokemonListUseCase {
     operator fun invoke(page: Int): Result<List<Pokemon>>
 
     companion object {
-        fun create(repository: PokemonRepository): FetchPokemonListUseCase =
+        fun create(repository: PokemonListRepository): FetchPokemonListUseCase =
             FetchPokemonListUseCaseImpl(repository)
     }
 }
 
 internal class FetchPokemonListUseCaseImpl constructor(
-    private val repository: PokemonRepository
+    private val repository: PokemonListRepository
 ) : FetchPokemonListUseCase {
 
     override operator fun invoke(page: Int): Result<List<Pokemon>> =
