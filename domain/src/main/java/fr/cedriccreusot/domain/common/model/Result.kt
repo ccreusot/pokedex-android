@@ -8,7 +8,7 @@ data class Success<T>(val value: T) : Result<T>()
 
 class EmptyError<T> : Error<T>("Empty Pokemon list")
 
-class NotFoundError<T>(pokemonId: String) : Error<T>("Pokemon[$pokemonId] not found")
+class NotFoundError<T>(pokemonId: Any) : Error<T>("Pokemon[$pokemonId] not found")
 
 class InvalidArgumentError<T>(invalidArgument: Any) :
     Error<T>("Invalid argument '$invalidArgument' can not be processed")

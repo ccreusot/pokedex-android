@@ -4,6 +4,7 @@ import com.google.common.truth.Truth.assertThat
 import fr.cedriccreusot.domain.common.model.EmptyError
 import fr.cedriccreusot.domain.common.model.Success
 import fr.cedriccreusot.domain.list.model.Pokemon
+import fr.cedriccreusot.pokedex.utils.mockedPokemon
 import io.mockk.confirmVerified
 import io.mockk.every
 import io.mockk.mockk
@@ -12,12 +13,8 @@ import me.sargunvohra.lib.pokekotlin.client.ErrorResponse
 import me.sargunvohra.lib.pokekotlin.client.PokeApi
 import me.sargunvohra.lib.pokekotlin.model.NamedApiResource
 import me.sargunvohra.lib.pokekotlin.model.NamedApiResourceList
-import me.sargunvohra.lib.pokekotlin.model.PokemonSprites
-import me.sargunvohra.lib.pokekotlin.model.PokemonType
 import org.junit.Before
 import org.junit.Test
-
-typealias MockedPokemon = me.sargunvohra.lib.pokekotlin.model.Pokemon
 
 class PokemonListRepositoryAdapterTest {
     private lateinit var pokeapi: PokeApi
@@ -110,23 +107,4 @@ class PokemonListRepositoryAdapterTest {
         const val PAGE2: Int = 20
         const val LIMIT: Int = 20
     }
-
-    private fun mockedPokemon() = MockedPokemon(
-        0,
-        "nyanCat",
-        0,
-        0,
-        true,
-        0,
-        0,
-        NamedApiResource("", "", 0),
-        emptyList(),
-        emptyList(),
-        emptyList(),
-        emptyList(),
-        emptyList(),
-        emptyList(),
-        listOf(PokemonType(0, NamedApiResource("Fire", "Cat", 0))),
-        PokemonSprites(null, null, null, null, null, null, null, null)
-    )
 }

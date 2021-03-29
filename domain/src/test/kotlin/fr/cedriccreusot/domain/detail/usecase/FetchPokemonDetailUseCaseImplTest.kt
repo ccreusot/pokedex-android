@@ -4,7 +4,7 @@ import com.google.common.truth.Truth.assertThat
 import fr.cedriccreusot.domain.common.model.InvalidArgumentError
 import fr.cedriccreusot.domain.common.model.NotFoundError
 import fr.cedriccreusot.domain.common.model.Success
-import fr.cedriccreusot.domain.common.repository.PokemonListRepository
+import fr.cedriccreusot.domain.common.repository.PokemonDetailRepository
 import fr.cedriccreusot.domain.detail.model.PokemonDetail
 import fr.cedriccreusot.domain.detail.model.PokemonStats
 import io.mockk.every
@@ -14,7 +14,7 @@ import org.junit.Test
 
 class FetchPokemonDetailUseCaseImplTest {
 
-    private val repository: PokemonListRepository = mockk()
+    private val repository: PokemonDetailRepository = mockk()
     private val useCase: FetchPokemonDetailUseCase = FetchPokemonDetailUseCaseImpl(repository)
 
     @Test
