@@ -1,5 +1,6 @@
 package fr.cedriccreusot.domain.detail.usecase
 
+import fr.cedriccreusot.domain.common.model.InvalidArgumentError
 import fr.cedriccreusot.domain.common.model.Result
 import fr.cedriccreusot.domain.common.repository.PokemonRepository
 import fr.cedriccreusot.domain.detail.model.PokemonDetail
@@ -16,7 +17,10 @@ interface FetchPokemonDetailUseCase {
 internal class FetchPokemonDetailUseCaseImpl(
     private val pokemonRepository: PokemonRepository
 ) : FetchPokemonDetailUseCase {
-    override fun invoke(pokemonId: Int): Result<PokemonDetail> {
-        return pokemonRepository.getPokemon(pokemonId)
-    }
+    override fun invoke(pokemonId: Int): Result<PokemonDetail> =
+        if (pokemonId < 0) {
+            InvalidArgumentError(pokemonId)
+        } else {
+            pokemonRepository.getPokemon(pokemonId)
+        }
 }
