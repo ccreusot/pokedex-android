@@ -3,7 +3,9 @@ package fr.cedriccreusot.pokedex.dataadapter
 import com.google.common.truth.Truth.assertThat
 import fr.cedriccreusot.domain.common.model.NotFoundError
 import fr.cedriccreusot.domain.common.model.Success
+import fr.cedriccreusot.domain.detail.model.Move
 import fr.cedriccreusot.domain.detail.model.PokemonDetail
+import fr.cedriccreusot.domain.detail.model.PokemonStats
 import io.mockk.every
 import io.mockk.mockk
 import me.sargunvohra.lib.pokekotlin.client.ErrorResponse
@@ -37,22 +39,8 @@ class PokemonDetailRepositoryAdapterTest {
     }
 
     @Test
-    fun `when poke api called and response is a success then repository should return a Success with a Pokemon detail`() {
-        val pokemonId = 42
-
-        // Given
-        every { pokeApi.getPokemon(pokemonId) } returns mockk()
-
-        // When
-        val result = repository.getPokemon(pokemonId)
-
-        // Then
-        assertThat(result).isInstanceOf(Success::class.java)
-        assertThat((result as Success).value).isInstanceOf(PokemonDetail::class.java)
-    }
-
-    @Test
     fun `when get Pokemon from data source then should transform it to Pokemon detail and return into Success `() {
+        val pokemonId = 42
         val pokemon = Pokemon(
             id = 42,
             name = "Golbat",
@@ -70,7 +58,15 @@ class PokemonDetailRepositoryAdapterTest {
             gameIndices = emptyList(),
             heldItems = emptyList(),
             moves = listOf(PokemonMove(move = NamedApiResource("wind-attack", "move", 17), emptyList())),
-            stats = listOf(PokemonStat(NamedApiResource("hp", "stat",id = 1), effort = 0, baseStat = 75)),
+            stats = listOf(
+                PokemonStat(NamedApiResource("hp", "stat",id = 1), effort = 0, baseStat = 75),
+                PokemonStat(NamedApiResource("attack", "stat", id = 1), effort = 0, baseStat = 80),
+                PokemonStat(NamedApiResource("defense", "stat", id = 1), effort = 0, baseStat = 80),
+                PokemonStat(NamedApiResource("spAttack", "stat", id = 1), effort = 0, baseStat = 80),
+                PokemonStat(NamedApiResource("spDefense", "stat", id = 1), effort = 0, baseStat = 80),
+                PokemonStat(NamedApiResource("speed", "stat", id = 1), effort = 0, baseStat = 80),
+
+                ),
             types = listOf(
                 PokemonType(1, NamedApiResource("poison", "type", 4)),
                 PokemonType(2, NamedApiResource("flying", "type", 3))
@@ -78,11 +74,40 @@ class PokemonDetailRepositoryAdapterTest {
             sprites = PokemonSprites("https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/42.png", null, "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/42.png", null, null, null, null, null)
         )
 
-        // Given
-        TODO()
-        // When
+        val pokemonDetail = PokemonDetail(
+            id = 42,
+            name = "Golbat",
+            imageUrl = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/42.png",
+            mainType = "poison",
+            secondaryType = "flying",
+            species = "golbat",
+            height = 16,
+            weight = 550,
+            abilities = listOf(
+                "inner-focus", "infiltrator"
+            ),
+            stats = PokemonStats(
+                hp = 75,
+                attack = 80,
+                defense = 80,
+                spAttack = 80,
+                spDefense = 80,
+                speed = 80
+            ),
+            moves = listOf(
+                "wind-attack",
+            )
+        )
 
+        // Given
+        every { pokeApi.getPokemon(pokemonId) } returns pokemon
+
+        // When
+        val result = repository.getPokemon(pokemonId)
 
         // Then
+        assertThat(result).isInstanceOf(Success::class.java)
+        assertThat((result as Success).value).isInstanceOf(PokemonDetail::class.java)
+        assertThat(result.value).isEqualTo(pokemonDetail)
     }
 }

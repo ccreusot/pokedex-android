@@ -12,17 +12,17 @@ data class PokemonDetail(
     val imageUrl: String,
     val mainType: String,
     val secondaryType: String?,
-    val description: String,
+//    val description: String,
     val species: String,
-    val height: String,
-    val weight: String,
+    val height: Int,
+    val weight: Int,
     val abilities: List<String>,
-    val genderParity: Pair<Male, Female>,
-    val eggGroups: List<String>,
-    val eggCycle: String,
+//    val genderParity: Pair<Male, Female>,
+//    val eggGroups: List<String>,
+//    val eggCycle: String,
     val stats: PokemonStats,
-    val pokemonEvolutions: Map<Level, Pokemon>,
-    val moves: List<Move>
+//    val pokemonEvolutions: Map<Level, Pokemon>,
+    val moves: List<String>
 )
 
 data class PokemonStats(

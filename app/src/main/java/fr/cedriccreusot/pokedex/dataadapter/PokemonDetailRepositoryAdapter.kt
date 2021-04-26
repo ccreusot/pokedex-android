@@ -13,31 +13,42 @@ class PokemonDetailRepositoryAdapter @Inject constructor(
     private val pokemonDataSource: PokeApi
 ) : PokemonDetailRepository {
     override fun getPokemon(id: Int): Result<PokemonDetail> {
-        lateinit var result: Result<PokemonDetail>
         return runCatching {
             pokemonDataSource.getPokemon(id)
-        }.let {
-            result = it.getOrNull()?.let {
-                Success(PokemonDetail(
-                    0,
-                    "",
-                    "",
-                    "",
-                    "",
-                    "",
-                    "",
-                    "",
-                    "",
-                    emptyList(),
-                    "" to "",
-                    emptyList(),
-                    "",
-                    PokemonStats(0,0, 0, 0, 0, 0),
-                    emptyMap(),
-                    emptyList()
-                ))
+        }.let { result ->
+            result.getOrNull()?.let { pokemon ->
+                Success(
+                    PokemonDetail(
+                        id = pokemon.id,
+                        name = pokemon.name,
+                        imageUrl = pokemon.sprites.frontDefault ?: "",
+                        mainType = pokemon.types.first().type.name,
+                        secondaryType = pokemon.types.let { types ->
+                            if (types.size > 1) {
+                                return@let types[1].type.name
+                            }
+                            null
+                        },
+                        species = pokemon.species.name,
+                        height = pokemon.height,
+                        weight = pokemon.weight,
+                        abilities = pokemon.abilities.map { ability ->
+                            ability.ability.name
+                        },
+                        stats = PokemonStats(
+                            hp = pokemon.stats.firstOrNull { stat -> stat.stat.name == "hp" }?.baseStat ?: 0,
+                            attack = pokemon.stats.firstOrNull { state -> state.stat.name == "attack" }?.baseStat ?: 0,
+                            defense = pokemon.stats.firstOrNull { state -> state.stat.name == "defense" }?.baseStat ?: 0,
+                            spAttack = pokemon.stats.firstOrNull { state -> state.stat.name == "spAttack"}?.baseStat ?: 0,
+                            spDefense = pokemon.stats.firstOrNull { state -> state.stat.name == "spDefense" }?.baseStat ?: 0,
+                            speed = pokemon.stats.firstOrNull { state -> state.stat.name == "speed" }?.baseStat ?: 0
+                        ),
+                        moves = pokemon.moves.map { move ->
+                            move.move.name
+                        }
+                    )
+                )
             } ?: NotFoundError(id)
-            result
         }
     }
 }
