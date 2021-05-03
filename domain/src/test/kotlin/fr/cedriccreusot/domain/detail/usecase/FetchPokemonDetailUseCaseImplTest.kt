@@ -30,16 +30,13 @@ class FetchPokemonDetailUseCaseImplTest {
                 "",
                 "",
                 "",
-                "",
-                "",
-                "",
+                0,
+                0,
                 emptyList(),
-                "" to "",
+                PokemonStats(
+                    0, 0, 0, 0, 0, 0,
+                ),
                 emptyList(),
-                "",
-                PokemonStats(1, 1, 1, 1, 1, 1),
-                emptyMap(),
-                emptyList()
             )
         )
 
