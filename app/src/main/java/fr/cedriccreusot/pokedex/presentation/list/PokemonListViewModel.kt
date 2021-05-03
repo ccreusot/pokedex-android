@@ -14,21 +14,21 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
-sealed class State {
-    object Loading : State()
-    object LoadingNextPage : State()
-    data class Success(val value: List<Pokemon>) : State()
-    data class Error(val message: String) : State()
-}
-
 class PokemonListViewModel @ViewModelInject constructor(private val useCase: FetchPokemonListUseCase) :
     ViewModel() {
+
+    sealed class State {
+        object Loading : State()
+        object LoadingNextPage : State()
+        data class Success(val value: List<Pokemon>) : State()
+        data class Error(val message: String) : State()
+    }
 
     private val pokemonListState: MutableLiveData<State> = MutableLiveData(State.Loading)
     private var pokemonList: List<Pokemon> = emptyList()
     private var pageIndex = 0
 
-    private var job : Job? = null
+    private var job: Job? = null
 
     fun pokemonListState(): LiveData<State> = pokemonListState
 

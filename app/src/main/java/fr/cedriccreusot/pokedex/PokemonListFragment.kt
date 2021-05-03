@@ -16,7 +16,7 @@ import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import fr.cedriccreusot.pokedex.databinding.FragmentPokemonListBinding
 import fr.cedriccreusot.pokedex.presentation.list.PokemonListViewModel
-import fr.cedriccreusot.pokedex.presentation.list.State
+import fr.cedriccreusot.pokedex.presentation.list.PokemonListViewModel.State
 import fr.cedriccreusot.pokedex.utils.GridSpacingItemDecoration
 import java.lang.ref.WeakReference
 
