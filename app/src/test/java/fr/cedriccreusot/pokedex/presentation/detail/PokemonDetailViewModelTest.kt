@@ -3,6 +3,8 @@ package fr.cedriccreusot.pokedex.presentation.detail
 import androidx.lifecycle.Observer
 import fr.cedriccreusot.domain.common.model.InvalidArgumentError
 import fr.cedriccreusot.domain.common.model.NotFoundError
+import fr.cedriccreusot.domain.common.model.Success
+import fr.cedriccreusot.domain.detail.model.PokemonDetail
 import fr.cedriccreusot.domain.detail.usecase.FetchPokemonDetailUseCase
 import fr.cedriccreusot.pokedex.presentation.detail.PokemonDetailViewModel.State
 import fr.cedriccreusot.pokedex.utils.ViewModelTest
@@ -60,4 +62,23 @@ class PokemonDetailViewModelTest : ViewModelTest() {
         verify { observe.onChanged(State.Error("Invalid argument '-1' can not be processed")) }
         confirmVerified(observe)
     }
+
+    @Test
+    fun `when we observe a pokemon details and the usecase returns a PokemonDetail - then we should return an success state`() {
+        // GIVEN
+        val mockedPokemon = mockk<PokemonDetail>(relaxed = true).copy(id = 42)
+        every { useCase(42) } returns Success(mockedPokemon)
+        val observe = mockk<Observer<State>>(relaxed = true)
+
+        // WHEN
+        viewModel.pokemonDetailState().observeForever(observe)
+        viewModel.fetchPokemonDetail(42)
+
+        // THEN
+        verify { observe.onChanged(State.Loading) }
+        verify { observe.onChanged(State.Success(mockedPokemon)) }
+        confirmVerified(observe)
+    }
+
+
 }
