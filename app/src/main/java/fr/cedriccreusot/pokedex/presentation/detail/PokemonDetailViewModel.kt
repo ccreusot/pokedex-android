@@ -4,6 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import fr.cedriccreusot.domain.common.model.InvalidArgumentError
+import fr.cedriccreusot.domain.common.model.NotFoundError
 import fr.cedriccreusot.domain.detail.model.PokemonDetail
 import fr.cedriccreusot.domain.detail.usecase.FetchPokemonDetailUseCase
 import kotlinx.coroutines.Dispatchers
@@ -20,7 +22,13 @@ class PokemonDetailViewModel constructor(
     fun fetchPokemonDetail(pokemonId: Int) {
         viewModelScope.launch(Dispatchers.IO) {
             _pokemonDetailState.postValue(State.Loading)
-            _pokemonDetailState.postValue(State.Error("Pokemon not found"))
+            _pokemonDetailState.postValue(
+                when (val result = useCase(pokemonId)) {
+                    is InvalidArgumentError -> State.Error(result.message)
+                    is NotFoundError -> State.Error(result.message)
+                    else -> TODO()
+                }
+            )
         }
     }
 

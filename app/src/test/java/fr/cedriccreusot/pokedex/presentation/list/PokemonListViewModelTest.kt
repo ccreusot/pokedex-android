@@ -23,7 +23,7 @@ import org.junit.Test
 @ExperimentalCoroutinesApi
 class PokemonListViewModelTest : ViewModelTest() {
 
-    lateinit var useCase: FetchPokemonListUseCase
+    private lateinit var useCase: FetchPokemonListUseCase
 
     @Before
     override fun setUp() {
