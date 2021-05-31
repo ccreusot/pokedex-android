@@ -37,6 +37,7 @@ class PokemonDetailFragment : Fragment() {
             ViewCompat.setTransitionName(pokeballImageView, "pokeball_${args.pokemonId}")
             ViewCompat.setTransitionName(pokemonImageView, "pokemon_${args.pokemonId}")
         }
+        TODO("LOAD THE POKEMON DETAIL !")
         return binding.get()?.root
     }
 }
