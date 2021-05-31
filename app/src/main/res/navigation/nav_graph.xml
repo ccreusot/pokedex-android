@@ -23,5 +23,8 @@
         <argument
             android:name="pokemonId"
             app:argType="integer" />
+        <argument
+            android:name="pokemonImg"
+            app:argType="string" />
     </fragment>
 </navigation>

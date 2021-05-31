@@ -14,7 +14,7 @@ import fr.cedriccreusot.pokedex.databinding.ItemPokemonBinding
 
 class PokemonViewHolder(
     private val binding: ItemPokemonBinding,
-    private val onPokemonClicked: (id: Int, extras: FragmentNavigator.Extras) -> Unit
+    private val onPokemonClicked: (id: Int, img: String, extras: FragmentNavigator.Extras) -> Unit
 ) : RecyclerView.ViewHolder(binding.root) {
 
     fun bind(pokemon: Pokemon) = with(binding) {
@@ -31,11 +31,13 @@ class PokemonViewHolder(
             ColorStateList.valueOf(ContextCompat.getColor(root.context, pokemon.getTypeResColor()))
 
         ViewCompat.setTransitionName(pokeballImageView, "pokeball_${pokemon.id}")
+        ViewCompat.setTransitionName(pokemonImageView, "pokemon_${pokemon.id}")
         val extras = FragmentNavigatorExtras(
-            pokeballImageView to "pokeball_${pokemon.id}"
+            pokeballImageView to "pokeball_${pokemon.id}",
+            pokemonImageView to "pokemon_${pokemon.id}"
         )
         root.setOnClickListener {
-            onPokemonClicked(pokemon.id, extras)
+            onPokemonClicked(pokemon.id, pokemon.imageUrl, extras)
         }
     }
 }

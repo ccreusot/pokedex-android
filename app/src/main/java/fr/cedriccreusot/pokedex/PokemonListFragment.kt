@@ -45,6 +45,7 @@ class PokemonListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        // to active transition animation on the back https://developer.android.com/guide/fragments/animate#recyclerview
         postponeEnterTransition()
 
         (view.parent as? ViewGroup)?.doOnPreDraw {
@@ -105,8 +106,8 @@ class PokemonListFragment : Fragment() {
         }
     }
 
-    private fun onPokemonClicked(pokemonId: Int, extras: FragmentNavigator.Extras) {
-        val action = PokemonListFragmentDirections.actionPokemonListFragmentToPokemonDetailFragment(pokemonId)
+    private fun onPokemonClicked(pokemonId: Int, pokemonImg: String, extras: FragmentNavigator.Extras) {
+        val action = PokemonListFragmentDirections.actionPokemonListFragmentToPokemonDetailFragment(pokemonId, pokemonImg)
         findNavController().navigate(action, extras)
     }
 }

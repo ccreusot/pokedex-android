@@ -1,5 +1,6 @@
 package fr.cedriccreusot.pokedex.presentation.detail
 
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -11,7 +12,7 @@ import fr.cedriccreusot.domain.detail.usecase.FetchPokemonDetailUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class PokemonDetailViewModel constructor(
+class PokemonDetailViewModel @ViewModelInject constructor(
     private val useCase: FetchPokemonDetailUseCase
 ) : ViewModel() {
 

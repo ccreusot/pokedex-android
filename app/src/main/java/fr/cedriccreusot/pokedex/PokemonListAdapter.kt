@@ -11,7 +11,7 @@ import fr.cedriccreusot.pokedex.databinding.ItemLoaderBinding
 import fr.cedriccreusot.pokedex.databinding.ItemPokemonBinding
 
 class PokemonListAdapter(
-    private val onPokemonClicked: (pokemonId: Int, extras: FragmentNavigator.Extras) -> Unit
+    private val onPokemonClicked: (pokemonId: Int, pokemonImg: String, extras: FragmentNavigator.Extras) -> Unit
 ) : ListAdapter<Pokemon, RecyclerView.ViewHolder>(PokemonDiffCallback) {
     private var isLoadingMore: Boolean = false
 
