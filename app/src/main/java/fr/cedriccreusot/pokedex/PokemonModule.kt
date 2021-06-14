@@ -1,5 +1,6 @@
 package fr.cedriccreusot.pokedex
 
+import com.apollographql.apollo.ApolloClient
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -11,14 +12,12 @@ import fr.cedriccreusot.domain.detail.usecase.FetchPokemonDetailUseCase
 import fr.cedriccreusot.domain.list.usecase.FetchPokemonListUseCase
 import fr.cedriccreusot.pokedex.dataadapter.PokemonDetailRepositoryAdapter
 import fr.cedriccreusot.pokedex.dataadapter.PokemonListRepositoryAdapter
-import me.sargunvohra.lib.pokekotlin.client.PokeApi
-import me.sargunvohra.lib.pokekotlin.client.PokeApiClient
 
 @Module
 @InstallIn(ActivityRetainedComponent::class)
 class PokemonModule {
     @Provides
-    fun providePokeApi(): PokeApi = PokeApiClient()
+    fun providePokeApi(): ApolloClient = ApolloClient.builder().serverUrl("https://beta.pokeapi.co/graphql/v1beta").build()
 
     @Provides
     fun provideFetchPokemonListUseCase(repository: PokemonListRepository): FetchPokemonListUseCase =

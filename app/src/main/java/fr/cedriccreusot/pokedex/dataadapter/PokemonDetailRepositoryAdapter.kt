@@ -1,22 +1,20 @@
 package fr.cedriccreusot.pokedex.dataadapter
 
+import com.apollographql.apollo.ApolloClient
 import fr.cedriccreusot.domain.common.model.NotFoundError
 import fr.cedriccreusot.domain.common.model.Result
-import fr.cedriccreusot.domain.common.model.Success
 import fr.cedriccreusot.domain.common.repository.PokemonDetailRepository
 import fr.cedriccreusot.domain.detail.model.PokemonDetail
-import fr.cedriccreusot.domain.detail.model.PokemonStats
-import me.sargunvohra.lib.pokekotlin.client.PokeApi
 import javax.inject.Inject
 
 class PokemonDetailRepositoryAdapter @Inject constructor(
-    private val pokemonDataSource: PokeApi
+    private val pokemonDataSource: ApolloClient
 ) : PokemonDetailRepository {
     override fun getPokemon(id: Int): Result<PokemonDetail> {
         return runCatching {
-            pokemonDataSource.getPokemon(id)
+            //pokemonDataSource.getPokemon(id)
         }.let { result ->
-            result.getOrNull()?.let { pokemon ->
+            /*result.getOrNull()?.let { pokemon ->
                 Success(
                     PokemonDetail(
                         id = pokemon.id,
@@ -48,7 +46,8 @@ class PokemonDetailRepositoryAdapter @Inject constructor(
                         }
                     )
                 )
-            } ?: NotFoundError(id)
+            } ?: NotFoundError(id)*/
+            NotFoundError(id)
         }
     }
 }
