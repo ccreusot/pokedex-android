@@ -5,7 +5,7 @@ import fr.cedriccreusot.domain.common.repository.PokemonListRepository
 import fr.cedriccreusot.domain.list.model.Pokemon
 
 interface FetchPokemonListUseCase {
-    operator fun invoke(page: Int): Result<List<Pokemon>>
+    suspend operator fun invoke(page: Int): Result<List<Pokemon>>
 
     companion object {
         fun create(repository: PokemonListRepository): FetchPokemonListUseCase =
@@ -17,6 +17,6 @@ internal class FetchPokemonListUseCaseImpl constructor(
     private val repository: PokemonListRepository
 ) : FetchPokemonListUseCase {
 
-    override operator fun invoke(page: Int): Result<List<Pokemon>> =
+    override suspend operator fun invoke(page: Int): Result<List<Pokemon>> =
         repository.getPokemons(page)
 }

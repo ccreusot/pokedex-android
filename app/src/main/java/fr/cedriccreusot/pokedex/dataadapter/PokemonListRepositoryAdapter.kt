@@ -9,24 +9,17 @@ import fr.cedriccreusot.domain.common.model.Success
 import fr.cedriccreusot.domain.common.repository.PokemonListRepository
 import fr.cedriccreusot.domain.list.model.Pokemon
 import fr.cedriccreusot.pokedex.PokemonListQuery
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class PokemonListRepositoryAdapter @Inject constructor(
     private val pokemonDataSource: ApolloClient
 ) : PokemonListRepository {
-    override fun getPokemons(page: Int): Result<List<Pokemon>> {
+    override suspend fun getPokemons(page: Int): Result<List<Pokemon>> {
         lateinit var result: Result<List<Pokemon>>
         runCatching {
-            runBlocking {
-                withContext(Dispatchers.IO) {
-                    pokemonDataSource
-                        .query(PokemonListQuery(Input.fromNullable(page * LIMIT)))
-                        .await()
-                }
-            }
+            pokemonDataSource
+                .query(PokemonListQuery(Input.fromNullable(page * LIMIT)))
+                .await()
             //pokemonDataSource.getPokemonList(page * LIMIT, LIMIT)
         }.onSuccess {
 //            TODO("find a solution for missing sprites")

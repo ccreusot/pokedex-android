@@ -8,10 +8,8 @@ import fr.cedriccreusot.domain.list.model.Pokemon
 import fr.cedriccreusot.domain.list.usecase.FetchPokemonListUseCase
 import fr.cedriccreusot.pokedex.presentation.list.PokemonListViewModel.State
 import fr.cedriccreusot.pokedex.utils.ViewModelTest
-import io.mockk.confirmVerified
+import io.mockk.*
 import io.mockk.every
-import io.mockk.mockk
-import io.mockk.verify
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.ObsoleteCoroutinesApi
 import kotlinx.coroutines.delay
@@ -36,7 +34,7 @@ class PokemonListViewModelTest : ViewModelTest() {
         val pokemonList = listOf(
             Pokemon(0, "Zero", "imageUrl", "Fire", null)
         )
-        every { useCase.invoke(0) }.returns(
+        coEvery { useCase.invoke(0) }.returns(
             Success(
                 pokemonList
             )
@@ -58,7 +56,7 @@ class PokemonListViewModelTest : ViewModelTest() {
         val pokemonList = listOf(
             Pokemon(0, "Zero", "imageUrl", "Fire", null)
         )
-        every { useCase.invoke(0) }.returns(
+        coEvery { useCase.invoke(0) }.returns(
             Success(
                 pokemonList
             )
@@ -88,13 +86,13 @@ class PokemonListViewModelTest : ViewModelTest() {
             val nextPage2 = listOf(
                 Pokemon(2, "TheSecond", "imageUrl", "THEONE", null)
             )
-            every {
+            coEvery {
                 useCase.invoke(0)
             }.returns(Success(firstPage))
-            every {
+            coEvery {
                 useCase.invoke(1)
             }.returns(Success(nextPage))
-            every {
+            coEvery {
                 useCase.invoke(2)
             }.returns(Success(nextPage2))
 
@@ -124,10 +122,10 @@ class PokemonListViewModelTest : ViewModelTest() {
             val firstPage = listOf(
                 Pokemon(0, "Zero", "imageUrl", "Fire", null)
             )
-            every {
+            coEvery {
                 useCase.invoke(0)
             }.returns(Success(firstPage))
-            every {
+            coEvery {
                 useCase.invoke(1)
             }.returns(PageEndOfPages())
 
@@ -149,7 +147,7 @@ class PokemonListViewModelTest : ViewModelTest() {
 
     @Test
     fun `when we observe the pokemonList and the usecase return an error it should return an error state`() {
-        every { useCase.invoke(any()) }.returns(
+        coEvery { useCase.invoke(any()) }.returns(
             EmptyError()
         )
         val observe = mockk<Observer<State>>(relaxed = true)
