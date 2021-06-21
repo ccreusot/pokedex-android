@@ -29,15 +29,15 @@ class PokemonListRepositoryAdapter @Inject constructor(
             }
             //pokemonDataSource.getPokemonList(page * LIMIT, LIMIT)
         }.onSuccess {
-            TODO("find a solution for missing sprites")
+//            TODO("find a solution for missing sprites")
             result =
-                Success(it.data!!.pokemon_v2_pokemon().map { pokemon ->
+                Success(it.data!!.pokemon_v2_pokemon.map { pokemon ->
                     Pokemon(
-                        pokemon.id(),
-                        pokemon.name(),
-                        pokemon.pokemon_v2_pokemonsprites().firstOrNull()?.sprites() ?: "",
-                        pokemon.pokemon_v2_pokemontypes().firstOrNull()?.pokemon_v2_type()?.name() ?: "",
-                        pokemon.pokemon_v2_pokemontypes().getOrNull(1)?.pokemon_v2_type()?.name() ?: "",
+                        pokemon.id,
+                        pokemon.name,
+                        "",
+                        pokemon.pokemon_v2_pokemontypes.firstOrNull()?.pokemon_v2_type?.name ?: "",
+                        pokemon.pokemon_v2_pokemontypes.getOrNull(1)?.pokemon_v2_type?.name ?: "",
                     )
                 })
         }.onFailure {
