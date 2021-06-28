@@ -12,6 +12,8 @@ import fr.cedriccreusot.domain.detail.usecase.FetchPokemonDetailUseCase
 import fr.cedriccreusot.domain.list.usecase.FetchPokemonListUseCase
 import fr.cedriccreusot.pokedex.dataadapter.PokemonDetailRepositoryAdapter
 import fr.cedriccreusot.pokedex.dataadapter.PokemonListRepositoryAdapter
+import fr.cedriccreusot.pokedex.datasource.PokemonDataSource
+import fr.cedriccreusot.pokedex.datasource.PokemonDataSourceImpl
 
 @Module
 @InstallIn(ActivityRetainedComponent::class)
@@ -36,4 +38,7 @@ abstract class PokemonRepositoryModule {
 
     @Binds
     abstract fun bindPokemonDetailRepository(pokemonDetailRepositoryAdapter: PokemonDetailRepositoryAdapter): PokemonDetailRepository
+
+    @Binds
+    abstract fun bindPokemonDataSource(dataSource: PokemonDataSourceImpl): PokemonDataSource
 }

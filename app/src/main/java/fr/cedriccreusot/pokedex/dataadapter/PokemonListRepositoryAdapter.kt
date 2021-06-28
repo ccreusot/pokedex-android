@@ -1,41 +1,35 @@
 package fr.cedriccreusot.pokedex.dataadapter
 
-import com.apollographql.apollo.ApolloClient
-import com.apollographql.apollo.api.Input
-import com.apollographql.apollo.coroutines.await
 import fr.cedriccreusot.domain.common.model.EmptyError
 import fr.cedriccreusot.domain.common.model.Result
 import fr.cedriccreusot.domain.common.model.Success
 import fr.cedriccreusot.domain.common.repository.PokemonListRepository
 import fr.cedriccreusot.domain.list.model.Pokemon
 import fr.cedriccreusot.pokedex.PokemonListQuery
+import fr.cedriccreusot.pokedex.datasource.PokemonDataSource
 import javax.inject.Inject
 
 class PokemonListRepositoryAdapter @Inject constructor(
-    private val pokemonDataSource: ApolloClient
+    private val pokemonDataSource: PokemonDataSource
 ) : PokemonListRepository {
     override suspend fun getPokemons(page: Int): Result<List<Pokemon>> {
         lateinit var result: Result<List<Pokemon>>
         runCatching {
-            pokemonDataSource
-                .query(PokemonListQuery(Input.fromNullable(page * LIMIT)))
-                .await()
-            //pokemonDataSource.getPokemonList(page * LIMIT, LIMIT)
+            pokemonDataSource.queryPokemons(page * LIMIT)
         }.onSuccess {
-//            TODO("find a solution for missing sprites")
             result =
-                Success(it.data!!.pokemon_v2_pokemon.map { pokemon ->
+                Success(((it as Success).value as PokemonListQuery.Data).pokemon_v2_pokemon.map { pokemon ->
                     Pokemon(
-                        pokemon.id,
-                        pokemon.name,
-                        "",
-                        pokemon.pokemon_v2_pokemontypes.firstOrNull()?.pokemon_v2_type?.name ?: "",
-                        pokemon.pokemon_v2_pokemontypes.getOrNull(1)?.pokemon_v2_type?.name ?: "",
+                        id = pokemon.id,
+                        name = pokemon.name,
+                        imageUrl = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.id}.png",
+                        mainType = pokemon.pokemon_v2_pokemontypes.firstOrNull()?.pokemon_v2_type?.name
+                            ?: "",
+                        secondaryType = pokemon.pokemon_v2_pokemontypes.getOrNull(1)?.pokemon_v2_type?.name,
                     )
                 })
         }.onFailure {
-            result =
-                EmptyError()
+            result = EmptyError()
         }
         return result
     }
